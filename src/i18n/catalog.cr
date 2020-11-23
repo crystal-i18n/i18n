@@ -47,6 +47,9 @@ module I18n
     # This method allows to set the locale used to produce translated contents. Note that once activated, the current
     # locale will remain active until it's explicly changed again. `#with_locale` should be used instead of `#activate`
     # for cases where it is important to ensure that the previous active locale is restored.
+    #
+    # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in
+    # the catalog (ie. if no translations was injected into this catalog for the considered locale).
     def activate(locale : String | Symbol) : String
       raise_if_locale_not_available(locale)
       @locale = locale.to_s
@@ -123,6 +126,9 @@ module I18n
     # end
     # catalog.translate!("test.translation") # outputs an english translation
     # ```
+    #
+    # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in
+    # the catalog (ie. if no translations was injected into this catalog for the considered locale).
     def with_locale(locale : String | Symbol) : Nil
       current_locale = @locale
       self.locale = locale
