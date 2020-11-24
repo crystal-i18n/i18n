@@ -37,11 +37,11 @@ module I18n
     translate(key, **kwargs)
   end
 
-  def self.t!(key : String | Symbol) : String
+  def self.t!(key : String | Symbol, **kwargs) : String
     translate!(key, **kwargs)
   end
 
-  def self.translate(key : String | Symbol) : String
+  def self.translate(key : String | Symbol, **kwargs) : String
     catalog.translate(key, **kwargs)
   end
 
