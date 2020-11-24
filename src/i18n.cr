@@ -33,20 +33,20 @@ module I18n
     catalog.activate(locale)
   end
 
-  def self.t(key : String | Symbol) : String
-    translate(key)
+  def self.t(key : String | Symbol, **kwargs) : String
+    translate(key, **kwargs)
   end
 
   def self.t!(key : String | Symbol) : String
-    translate(key)
+    translate!(key, **kwargs)
   end
 
   def self.translate(key : String | Symbol) : String
-    catalog.translate(key)
+    catalog.translate(key, **kwargs)
   end
 
-  def self.translate!(key : String | Symbol) : String
-    catalog.translate!(key)
+  def self.translate!(key : String | Symbol, **kwargs) : String
+    catalog.translate!(key, **kwargs)
   end
 
   def self.with_locale(locale : String | Symbol) : Nil

@@ -85,21 +85,21 @@ module I18n
     end
 
     # Alias for `#translate`.
-    def t(key : String | Symbol) : String
-      translate(key)
+    def t(key : String | Symbol, **kwargs) : String
+      translate(key, **kwargs)
     end
 
     # Alias for `#translate!`.
-    def t!(key : String | Symbol) : String
-      translate(key)
+    def t!(key : String | Symbol, **kwargs) : String
+      translate!(key, **kwargs)
     end
 
     # Performs a translation lookup.
     #
     # This method performs a translation lookup for a given `key`. If no translation can be found for the given `key`, a
     # default string stating that the translation is missing will be returned.
-    def translate(key : String | Symbol) : String
-      translate!(key)
+    def translate(key : String | Symbol, **kwargs) : String
+      translate!(key, **kwargs)
     rescue error : Errors::MissingTranslation
       error.message.to_s
     end
@@ -108,9 +108,14 @@ module I18n
     #
     # This method performs a translation lookup for a given `key`. If no translation can be found for the given `key`,
     # an `I18n::Errors::MissingTranslation` exception will be raised.
-    def translate!(key : String | Symbol) : String
-      translation_key = "#{locale}.#{key}"
-      @translations.fetch(translation_key) { raise Errors::MissingTranslation.new("missing translation: #{key}") }
+    def translate!(key : String | Symbol, **kwargs) : String
+      key = "#{locale}.#{key}"
+
+      entry = @translations.fetch(key) { raise Errors::MissingTranslation.new("missing translation: #{key}") }
+
+      entry = entry % kwargs unless kwargs.empty?
+
+      entry
     end
 
     # Allows to activate a specific locale for a specific block.
