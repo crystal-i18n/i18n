@@ -1,0 +1,5 @@
+fr:
+  top_level: "Il s'agit d'une traduction de niveau supérieur"
+  simple:
+    translation: "C'est une traduction simple"
+    interpolation: "Bonjour, %{name}!"

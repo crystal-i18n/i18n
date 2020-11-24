@@ -74,7 +74,7 @@ module I18n
 
     # Returns the currently active locale.
     #
-    # The returned value will default to the default locale another locale is explicitly activated.
+    # The returned value will default to the default locale unless another locale is explicitly activated.
     def locale : String
       @locale ||= @default_locale
     end
@@ -139,7 +139,7 @@ module I18n
       self.locale = locale
       yield
     ensure
-      self.locale = current_locale
+      self.locale = current_locale || default_locale
     end
 
     private def inject_and_normalize(translations : TranslationsHash, path : String = "")
@@ -155,11 +155,11 @@ module I18n
     end
 
     private def locale_available?(locale)
-      available_locales.includes?(locale.to_s)
+      @available_locales.includes?(locale.to_s)
     end
 
     private def raise_if_locale_not_available(locale)
-      raise InvalidLocale.new("#{locale} is not a valid locale") if !locale_available?(locale)
+      raise Errors::InvalidLocale.new("#{locale} is not a valid locale") if !locale_available?(locale)
     end
   end
 end

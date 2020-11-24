@@ -1,0 +1,5 @@
+en:
+  top_level: "This is a top-level translation"
+  simple:
+    translation: "This is a simple translation"
+    interpolation: "Hello, %{name}!"
