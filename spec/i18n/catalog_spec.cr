@@ -143,7 +143,31 @@ describe I18n::Catalog do
       catalog.translate(:top_level).should eq "This is a top-level translation"
     end
 
-    it "returns a default fallback sring if the translation is missing" do
+    it "can return a translated and pluralized string" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate("simple.pluralization", count: 0).should eq "0 items"
+      catalog.translate("simple.pluralization", count: 1).should eq "One item"
+      catalog.translate("simple.pluralization", count: 42).should eq "42 items"
+    end
+
+    it "always ensure that zero pluralization rules have precedence if applicable" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate("simple.pluralization_with_zero", count: 0).should eq "No items"
+      catalog.translate("simple.pluralization_with_zero", count: 1).should eq "One item"
+      catalog.translate("simple.pluralization_with_zero", count: 42).should eq "42 items"
+    end
+
+    it "is able to pluralize and interpolate at the same time" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate("simple.pluralization_and_interpolation", count: 0, name: "John").should eq "0 items for John!"
+      catalog.translate("simple.pluralization_and_interpolation", count: 1, name: "John").should eq "One item for John!"
+      catalog.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 items for John!"
+    end
+
+    it "returns a default fallback string if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
 
@@ -174,6 +198,32 @@ describe I18n::Catalog do
       catalog.translate!(:top_level).should eq "This is a top-level translation"
     end
 
+    it "can return a translated and pluralized string" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!("simple.pluralization", count: 0).should eq "0 items"
+      catalog.translate!("simple.pluralization", count: 1).should eq "One item"
+      catalog.translate!("simple.pluralization", count: 42).should eq "42 items"
+    end
+
+    it "always ensure that zero pluralization rules have precedence if applicable" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!("simple.pluralization_with_zero", count: 0).should eq "No items"
+      catalog.translate!("simple.pluralization_with_zero", count: 1).should eq "One item"
+      catalog.translate!("simple.pluralization_with_zero", count: 42).should eq "42 items"
+    end
+
+    it "is able to pluralize and interpolate at the same time" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!("simple.pluralization_and_interpolation", count: 0, name: "John").should eq "0 items for John!"
+      catalog.translate!("simple.pluralization_and_interpolation", count: 1, name: "John").should(
+        eq "One item for John!"
+      )
+      catalog.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 items for John!"
+    end
+
     it "raises an error if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -193,6 +243,7 @@ describe I18n::Catalog do
 
       catalog.t("simple.translation").should eq "C'est une traduction simple"
       catalog.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
+      catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
     end
   end
@@ -206,6 +257,7 @@ describe I18n::Catalog do
 
       catalog.t!("simple.translation").should eq "C'est une traduction simple"
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
+      catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
         catalog.t!("unknown.translation")
       end

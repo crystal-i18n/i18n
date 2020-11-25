@@ -3,3 +3,13 @@ fr:
   simple:
     translation: "C'est une traduction simple"
     interpolation: "Bonjour, %{name}!"
+    pluralization:
+      one: "Un objet"
+      other: "%{count} objets"
+    pluralization_with_zero:
+      zero: "Pas d'objets"
+      one: "Un objet"
+      other: "%{count} objets"
+    pluralization_and_interpolation:
+      one: "Un objet pour %{name}!"
+      other: "%{count} objets pour %{name}!"

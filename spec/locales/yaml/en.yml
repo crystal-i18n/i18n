@@ -3,3 +3,13 @@ en:
   simple:
     translation: "This is a simple translation"
     interpolation: "Hello, %{name}!"
+    pluralization:
+      one: "One item"
+      other: "%{count} items"
+    pluralization_with_zero:
+      zero: "No items"
+      one: "One item"
+      other: "%{count} items"
+    pluralization_and_interpolation:
+      one: "One item for %{name}!"
+      other: "%{count} items for %{name}!"

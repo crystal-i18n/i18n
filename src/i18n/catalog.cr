@@ -85,21 +85,26 @@ module I18n
     end
 
     # Alias for `#translate`.
-    def t(key : String | Symbol, **kwargs) : String
-      translate(key, **kwargs)
+    def t(key : String | Symbol, count : Int? = nil, **kwargs) : String
+      translate(key, count, **kwargs)
     end
 
     # Alias for `#translate!`.
-    def t!(key : String | Symbol, **kwargs) : String
-      translate!(key, **kwargs)
+    def t!(key : String | Symbol, count : Int? = nil, **kwargs) : String
+      translate!(key, count, **kwargs)
     end
 
     # Performs a translation lookup.
     #
     # This method performs a translation lookup for a given `key`. If no translation can be found for the given `key`, a
     # default string stating that the translation is missing will be returned.
-    def translate(key : String | Symbol, **kwargs) : String
-      translate!(key, **kwargs)
+    #
+    # ```
+    # catalog.translate("simple.translation")
+    # catalog.translate("hello.user", name: "John") # => "Hello John!"
+    # ```
+    def translate(key : String | Symbol, count : Int? = nil, **kwargs) : String
+      translate!(key, count, **kwargs)
     rescue error : Errors::MissingTranslation
       error.message.to_s
     end
@@ -108,12 +113,22 @@ module I18n
     #
     # This method performs a translation lookup for a given `key`. If no translation can be found for the given `key`,
     # an `I18n::Errors::MissingTranslation` exception will be raised.
-    def translate!(key : String | Symbol, **kwargs) : String
-      key = "#{locale}.#{key}"
+    #
+    # ```
+    # catalog.translate!("simple.translation")
+    # catalog.translate!("hello.user", name: "John") # => "Hello John!"
+    # ```
+    def translate!(key : String | Symbol, count : Int? = nil, **kwargs) : String
+      key = suffix_key(locale, key)
+
+      key = pluralized_key(key, count) unless count.nil?
 
       entry = @translations.fetch(key) { raise Errors::MissingTranslation.new("missing translation: #{key}") }
 
-      entry = entry % kwargs unless kwargs.empty?
+      entry = interpolate(entry, "count", count) unless count.nil?
+      kwargs.each do |variable_name, value|
+        entry = interpolate(entry, variable_name, value)
+      end
 
       entry
     end
@@ -144,7 +159,7 @@ module I18n
 
     private def inject_and_normalize(translations : TranslationsHash, path : String = "")
       translations.each do |key, data|
-        current_path = path.empty? ? key : "#{path}.#{key}"
+        current_path = path.empty? ? key : suffix_key(path, key)
 
         if data.is_a?(String)
           @translations[current_path] = data
@@ -154,12 +169,32 @@ module I18n
       end
     end
 
+    private def interpolate(translation, variable_name, value)
+      translation.gsub(/\%{#{variable_name}}/, value)
+    end
+
     private def locale_available?(locale)
       @available_locales.includes?(locale.to_s)
     end
 
+    private def pluralized_key(prefix, count)
+      suffix = if count == 0 && @translations[suffix_key(prefix, :zero)]?
+                 :zero
+               elsif !(rule = Pluralization.rule_for(locale)).nil?
+                 rule.rule(count)
+               else
+                 count == 1 ? :one : :other
+               end
+
+      suffix_key(prefix, suffix)
+    end
+
     private def raise_if_locale_not_available(locale)
       raise Errors::InvalidLocale.new("#{locale} is not a valid locale") if !locale_available?(locale)
+    end
+
+    private def suffix_key(key, suffix)
+      "#{key}.#{suffix}"
     end
   end
 end

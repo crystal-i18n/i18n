@@ -4,25 +4,22 @@ require "yaml"
 require "./i18n/**"
 
 module I18n
-  # :nodoc:
-  alias FiberId = UInt64
-
   alias TranslationsHashValues = String | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
-  @@config = {} of FiberId => Config
-  @@catalog = {} of FiberId => Catalog
+  @@config : Config?
+  @@catalog : Catalog?
 
   def self.activate(locale : String | Symbol) : String
     catalog.activate(locale)
   end
 
-  def self.config
-    @@config[Fiber.current.object_id] ||= Config.new
+  def self.config : Config
+    @@config ||= Config.new
   end
 
   def self.init : Nil
-    @@catalog[Fiber.current.object_id] = Catalog.from_config(config)
+    @@catalog = Catalog.from_config(config)
   end
 
   def self.locale : String
@@ -33,20 +30,20 @@ module I18n
     catalog.activate(locale)
   end
 
-  def self.t(key : String | Symbol, **kwargs) : String
-    translate(key, **kwargs)
+  def self.t(key : String | Symbol, count : Int? = nil, **kwargs) : String
+    translate(key, count, **kwargs)
   end
 
-  def self.t!(key : String | Symbol, **kwargs) : String
-    translate!(key, **kwargs)
+  def self.t!(key : String | Symbol, count : Int? = nil, **kwargs) : String
+    translate!(key, count, **kwargs)
   end
 
-  def self.translate(key : String | Symbol, **kwargs) : String
-    catalog.translate(key, **kwargs)
+  def self.translate(key : String | Symbol, count : Int? = nil, **kwargs) : String
+    catalog.translate(key, count, **kwargs)
   end
 
-  def self.translate!(key : String | Symbol, **kwargs) : String
-    catalog.translate!(key, **kwargs)
+  def self.translate!(key : String | Symbol, count : Int? = nil, **kwargs) : String
+    catalog.translate!(key, count, **kwargs)
   end
 
   def self.with_locale(locale : String | Symbol) : Nil
@@ -54,6 +51,6 @@ module I18n
   end
 
   private def self.catalog
-    @@catalog[Fiber.current.object_id] ||= Catalog.new
+    @@catalog ||= Catalog.new
   end
 end
