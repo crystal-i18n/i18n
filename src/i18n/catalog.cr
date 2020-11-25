@@ -55,6 +55,14 @@ module I18n
       @locale = locale.to_s
     end
 
+    # Returns the available locales for the catalog.
+    #
+    # If no translations have injected into the catalog of translations yet, an array with the default locale in it will
+    # be returned.
+    def available_locales : Array(String)
+      @available_locales.empty? ? [default_locale] : @available_locales
+    end
+
     # Injects a hash of translations into the catalog.
     #
     # This method can be used to inject a hash of loaded translations into a specific catalog. This is mainly useful if
@@ -174,7 +182,7 @@ module I18n
     end
 
     private def locale_available?(locale)
-      @available_locales.includes?(locale.to_s)
+      available_locales.includes?(locale.to_s)
     end
 
     private def pluralized_key(prefix, count)
