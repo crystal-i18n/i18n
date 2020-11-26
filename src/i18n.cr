@@ -18,6 +18,10 @@ module I18n
     @@config ||= Config.new
   end
 
+  def self.config=(config : Config) : Config
+    @@config = config
+  end
+
   def self.init : Nil
     @@catalog = Catalog.from_config(config)
   end
