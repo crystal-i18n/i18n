@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class Arabic < Rule
-        def rule(count : Int) : Symbol
+        def apply(count : Int) : Symbol
           mod100 = count % 100
 
           if count == 0

@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class Lithuanian < Rule
-        def rule(count : Int) : Symbol
+        def apply(count : Int) : Symbol
           mod10 = count % 10
           mod100 = count % 100
 

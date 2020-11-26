@@ -189,7 +189,7 @@ module I18n
       suffix = if count == 0 && @translations[suffix_key(prefix, :zero)]?
                  :zero
                elsif !(rule = Pluralization.rule_for(locale)).nil?
-                 rule.rule(count)
+                 rule.apply(count)
                else
                  count == 1 ? :one : :other
                end

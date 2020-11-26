@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class Macedonian < Rule
-        def rule(count : Int) : Symbol
+        def apply(count : Int) : Symbol
           if count % 10 == 1 && count != 11
             :one
           else
