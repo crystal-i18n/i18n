@@ -1,12 +1,16 @@
 module I18n
   module Pluralization
     abstract class Rule
-      # Pluralization rule used for: French, Fulah, Kabyle.
+      # Central Morocco Tamazight pluralization rule.
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
-      class OneUpToTwoOther < Rule
+      class CentralMoroccoTamazight < Rule
         def rule(count : Int) : Symbol
-          count && count >= 0 && count < 2 ? :one : :other
+          if ([0, 1] + (11..99).to_a).includes?(count)
+            :one
+          else
+            :other
+          end
         end
       end
     end

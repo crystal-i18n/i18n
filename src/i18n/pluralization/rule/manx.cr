@@ -1,12 +1,16 @@
 module I18n
   module Pluralization
     abstract class Rule
-      # Pluralization rule used for: French, Fulah, Kabyle.
+      # Manx pluralization rule.
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
-      class OneUpToTwoOther < Rule
+      class Manx < Rule
         def rule(count : Int) : Symbol
-          count && count >= 0 && count < 2 ? :one : :other
+          if [1, 2].includes?(count % 10) || count % 20 == 0
+            :one
+          else
+            :other
+          end
         end
       end
     end
