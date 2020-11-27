@@ -32,6 +32,19 @@ describe I18n do
     end
   end
 
+  describe "#available_locales" do
+    it "returns the available locales" do
+      I18n.available_locales.should eq ["en", "fr"]
+    end
+
+    it "returns an array with the default locale in it if no translations are available yet" do
+      I18n.config = I18n::Config.new
+      I18n.init
+
+      I18n.available_locales.should eq [I18n.config.default_locale]
+    end
+  end
+
   describe "#config" do
     it "#returns the main Config object" do
       I18n.config.should be_a I18n::Config

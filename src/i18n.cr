@@ -57,6 +57,13 @@ module I18n
     catalog.activate(locale)
   end
 
+  # Returns the available locales.
+  #
+  # If no translations have been loaded yet, an array with the default locale in it will be returned.
+  def self.available_locales : Array(String)
+    catalog.available_locales
+  end
+
   # Returns the main configuration object.
   #
   # This methods return the main `I18n::Config` object used by the `I18n` module to persist configuration options.
