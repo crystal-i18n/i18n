@@ -182,6 +182,30 @@ describe I18n::Catalog do
       catalog.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 items for John!"
     end
 
+    it "can return a translations resolved using a scope expressed as a symbol" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate(:translation, scope: :simple).should eq "This is a simple translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as a string" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate(:translation, scope: "simple.nested").should eq "This is a nested translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as an array of symbols" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate(:translation, scope: [:simple, :nested]).should eq "This is a nested translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as an array of strings" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate(:translation, scope: ["simple", "nested"]).should eq "This is a nested translation"
+    end
+
     it "returns a default fallback string if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -239,6 +263,30 @@ describe I18n::Catalog do
       catalog.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 items for John!"
     end
 
+    it "can return a translations resolved using a scope expressed as a symbol" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!(:translation, scope: :simple).should eq "This is a simple translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as a string" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!(:translation, scope: "simple.nested").should eq "This is a nested translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as an array of symbols" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!(:translation, scope: [:simple, :nested]).should eq "This is a nested translation"
+    end
+
+    it "can return a translations resolved using a scope expressed as an array of strings" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!(:translation, scope: ["simple", "nested"]).should eq "This is a nested translation"
+    end
+
     it "raises an error if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -259,6 +307,7 @@ describe I18n::Catalog do
       catalog.t("simple.translation").should eq "C'est une traduction simple"
       catalog.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
+      catalog.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
     end
   end
@@ -273,6 +322,7 @@ describe I18n::Catalog do
       catalog.t!("simple.translation").should eq "C'est une traduction simple"
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
+      catalog.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
         catalog.t!("unknown.translation")
       end

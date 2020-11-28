@@ -92,14 +92,27 @@ module I18n
       activate(locale)
     end
 
+    def localize(object : Time, scope = :time, format = :default) : String
+    end
+
     # Alias for `#translate`.
-    def t(key : String | Symbol, count : Int? = nil, **kwargs) : String
-      translate(key, count, **kwargs)
+    def t(
+      key : String | Symbol,
+      count : Int? = nil,
+      scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      **kwargs
+    ) : String
+      translate(key, count, scope, **kwargs)
     end
 
     # Alias for `#translate!`.
-    def t!(key : String | Symbol, count : Int? = nil, **kwargs) : String
-      translate!(key, count, **kwargs)
+    def t!(
+      key : String | Symbol,
+      count : Int? = nil,
+      scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      **kwargs
+    ) : String
+      translate!(key, count, scope, **kwargs)
     end
 
     # Performs a translation lookup.
@@ -108,11 +121,18 @@ module I18n
     # default string stating that the translation is missing will be returned.
     #
     # ```
-    # catalog.translate("simple.translation")
-    # catalog.translate("hello.user", name: "John") # => "Hello John!"
+    # catalog.translate("simple.translation")               # => "Simple translation"
+    # catalog.translate("hello.user", name: "John")         # => "Hello John!"
+    # catalog.translate(:blank, scope: "error.username")    # => "Username cannot be blank"
+    # catalog.translate(:blank, scope: [:error, :username]) # => "Username cannot be blank"
     # ```
-    def translate(key : String | Symbol, count : Int? = nil, **kwargs) : String
-      translate!(key, count, **kwargs)
+    def translate(
+      key : String | Symbol,
+      count : Int? = nil,
+      scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      **kwargs
+    ) : String
+      translate!(key, count, scope, **kwargs)
     rescue error : Errors::MissingTranslation
       error.message.to_s
     end
@@ -123,12 +143,24 @@ module I18n
     # an `I18n::Errors::MissingTranslation` exception will be raised.
     #
     # ```
-    # catalog.translate!("simple.translation")
-    # catalog.translate!("hello.user", name: "John") # => "Hello John!"
+    # catalog.translate!("simple.translation")               # => "Simple translation"
+    # catalog.translate!("hello.user", name: "John")         # => "Hello John!"
+    # catalog.translate!(:blank, scope: "error.username")    # => "Username cannot be blank"
+    # catalog.translate!(:blank, scope: [:error, :username]) # => "Username cannot be blank"
     # ```
-    def translate!(key : String | Symbol, count : Int? = nil, **kwargs) : String
-      key = suffix_key(locale, key)
+    def translate!(
+      key : String | Symbol,
+      count : Int? = nil,
+      scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      **kwargs
+    ) : String
+      if scope.is_a?(Array)
+        key = scope.reverse.reduce(key) { |k, part| suffix_key(part.to_s, k) }
+      elsif !scope.nil?
+        key = suffix_key(scope.to_s, key)
+      end
 
+      key = suffix_key(locale, key)
       key = pluralized_key(key, count) unless count.nil?
 
       entry = @translations.fetch(key) { raise Errors::MissingTranslation.new("missing translation: #{key}") }

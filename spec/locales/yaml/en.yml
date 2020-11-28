@@ -13,3 +13,5 @@ en:
     pluralization_and_interpolation:
       one: "One item for %{name}!"
       other: "%{count} items for %{name}!"
+    nested:
+      translation: "This is a nested translation"

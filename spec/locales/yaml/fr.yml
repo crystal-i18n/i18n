@@ -13,3 +13,5 @@ fr:
     pluralization_and_interpolation:
       one: "Un objet pour %{name}!"
       other: "%{count} objets pour %{name}!"
+    nested:
+      translation: "C'est une traduction imbriquée"

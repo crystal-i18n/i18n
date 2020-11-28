@@ -103,13 +103,23 @@ module I18n
   end
 
   # Alias for `#translate`.
-  def self.t(key : String | Symbol, count : Int? = nil, **kwargs) : String
-    translate(key, count, **kwargs)
+  def self.t(
+    key : String | Symbol,
+    count : Int? = nil,
+    scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    **kwargs
+  ) : String
+    translate(key, count, scope, **kwargs)
   end
 
   # Alias for `#translate!`.
-  def self.t!(key : String | Symbol, count : Int? = nil, **kwargs) : String
-    translate!(key, count, **kwargs)
+  def self.t!(
+    key : String | Symbol,
+    count : Int? = nil,
+    scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    **kwargs
+  ) : String
+    translate!(key, count, scope, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -118,11 +128,18 @@ module I18n
   # default string stating that the translation is missing will be returned.
   #
   # ```
-  # I18n.translate("simple.translation")
-  # I18n.translate("hello.user", name: "John") # => "Hello John!"
+  # I18n.translate("simple.translation")               # => "Simple translation"
+  # I18n.translate("hello.user", name: "John")         # => "Hello John!"
+  # I18n.translate(:blank, scope: "error.username")    # => "Username cannot be blank"
+  # I18n.translate(:blank, scope: [:error, :username]) # => "Username cannot be blank"
   # ```
-  def self.translate(key : String | Symbol, count : Int? = nil, **kwargs) : String
-    catalog.translate(key, count, **kwargs)
+  def self.translate(
+    key : String | Symbol,
+    count : Int? = nil,
+    scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    **kwargs
+  ) : String
+    catalog.translate(key, count, scope, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -131,11 +148,18 @@ module I18n
   # an `I18n::Errors::MissingTranslation` exception will be raised.
   #
   # ```
-  # I18n.translate!("simple.translation")
-  # I18n.translate!("hello.user", name: "John") # => "Hello John!"
+  # I18n.translate!("simple.translation")               # => "Simple translation"
+  # I18n.translate!("hello.user", name: "John")         # => "Hello John!"
+  # I18n.translate!(:blank, scope: "error.username")    # => "Username cannot be blank"
+  # I18n.translate!(:blank, scope: [:error, :username]) # => "Username cannot be blank"
   # ```
-  def self.translate!(key : String | Symbol, count : Int? = nil, **kwargs) : String
-    catalog.translate!(key, count, **kwargs)
+  def self.translate!(
+    key : String | Symbol,
+    count : Int? = nil,
+    scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    **kwargs
+  ) : String
+    catalog.translate!(key, count, scope, **kwargs)
   end
 
   # Allows to activate a specific locale for a specific block.
