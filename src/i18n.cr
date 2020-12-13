@@ -39,7 +39,7 @@ require "./i18n/**"
 # I18n.t("simple.pluralization", count: 42)        # outputs "42 items"
 # ```
 module I18n
-  alias TranslationsHashValues = String | Hash(String, TranslationsHashValues)
+  alias TranslationsHashValues = String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
   @@config : Config?

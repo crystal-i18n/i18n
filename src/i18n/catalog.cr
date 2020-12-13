@@ -92,9 +92,6 @@ module I18n
       activate(locale)
     end
 
-    def localize(object : Time, scope = :time, format = :default) : String
-    end
-
     # Alias for `#translate`.
     def t(
       key : String | Symbol,
@@ -203,6 +200,10 @@ module I18n
 
         if data.is_a?(String)
           @translations[current_path] = data
+        elsif data.is_a?(Array)
+          data.each_with_index do |value, i|
+            @translations[suffix_key(current_path, i)] = value
+          end
         else
           inject_and_normalize(data, current_path)
         end

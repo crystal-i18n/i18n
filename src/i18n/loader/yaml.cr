@@ -23,7 +23,13 @@ module I18n
         translations = TranslationsHash.new
 
         data.as_h.each do |k, v|
-          translations[k.as_s] = v.as_s? ? v.as_s : parsed_data_to_translations_hash(v.clone)
+          translations[k.as_s] = if v.as_s?
+                                   v.as_s
+                                 elsif v.as_a?
+                                   v.as_a.map(&.as_s)
+                                 else
+                                   parsed_data_to_translations_hash(v.clone)
+                                 end
         end
 
         translations
