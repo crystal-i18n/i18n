@@ -80,6 +80,15 @@ module I18n
       end
     end
 
+    # Alias for `#localize`.
+    def l(
+      object : Time | Tuple(Int32, Int32, Int32),
+      format : String | Symbol = :default,
+      **kwargs
+    ) : String
+      localize(object, format, **kwargs)
+    end
+
     # Returns the currently active locale.
     #
     # The returned value will default to the default locale unless another locale is explicitly activated.
@@ -90,6 +99,81 @@ module I18n
     # Alias for `#activate`.
     def locale=(locale : String | Symbol) : String
       activate(locale)
+    end
+
+    # Localizes a datetime or a date.
+    #
+    # This method allows to localize a `Time` object or a `Tuple(Int32, Int32, Int32)` object (which correspond to a
+    # date obtained through the use of `Time#date`). Both time or "date" objects can be localized using a predefined
+    # format such as `:default`, `:short` or `:long`:
+    #
+    # ```
+    # I18n.localize(Time.local)             # => Sun, 13 Dec 2020 21:11:08 -0500
+    # I18n.localize(Time.local, :short)     # => 13 Dec 21:11
+    # I18n.localize(Time.local.date)        # => 2020-12-13
+    # I18n.localize(Time.local.date, :long) # => December 13, 2020
+    # ```
+    #
+    # Custom format strings can be specified too. For example:
+    #
+    # ```
+    # I18n.localize(Time.local, "%a, %d %b %Y") # => Sun, 13 Dec 2020
+    # ```
+    #
+    # This method requires the following structure to be defined in localization files (the following example uses YAML,
+    # but this can easily be applied to JSON files too):
+    #
+    # ```
+    # en:
+    #   i18n:
+    #     date:
+    #       abbr_day_names: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    #       abbr_month_names: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    #       day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+    #       month_names: [January, February, March, April, May, June,
+    #                     July, August, September, October, November, December]
+    #       formats:
+    #         default: "%Y-%m-%d"
+    #         long: "%B %d, %Y"
+    #         short: "%b %d"
+    #     time:
+    #       am: am
+    #       formats:
+    #         default: "%a, %d %b %Y %H:%M:%S %z"
+    #         long: "%B %d, %Y %H:%M"
+    #         short: "%d %b %H:%M"
+    #       pm: pm
+    # ```
+    def localize(
+      object : Time | Tuple(Int32, Int32, Int32),
+      format : String | Symbol = :default,
+      **kwargs
+    ) : String
+      type = object.is_a?(Time) ? "time" : "date"
+      format = begin
+        t!("i18n.#{type}.formats.#{format}", **kwargs)
+      rescue Errors::MissingTranslation
+        format
+      end
+
+      object = Time.local(year: object[0], month: object[1], day: object[2]) if !object.is_a?(Time)
+
+      format = format.to_s.gsub(/%(|\^)[aAbBpP]/) do |match|
+        case match
+        when "%a"  then t!("i18n.date.abbr_day_names.#{object.day_of_week.to_i - 1}")
+        when "%^a" then t!("i18n.date.abbr_day_names.#{object.day_of_week.to_i - 1}").upcase
+        when "%A"  then t!("i18n.date.day_names.#{object.day_of_week.to_i - 1}")
+        when "%^A" then t!("i18n.date.day_names.#{object.day_of_week.to_i - 1}").upcase
+        when "%b"  then t!("i18n.date.abbr_month_names.#{object.month - 1}")
+        when "%^b" then t!("i18n.date.abbr_month_names.#{object.month - 1}").upcase
+        when "%B"  then t!("i18n.date.month_names.#{object.month - 1}")
+        when "%^B" then t!("i18n.date.month_names.#{object.month - 1}").upcase
+        when "%p"  then t!("i18n.time.#{object.hour < 12 ? :am : :pm}").upcase
+        when "%P"  then t!("i18n.time.#{object.hour < 12 ? :am : :pm}").downcase
+        end
+      end
+
+      object.to_s(format)
     end
 
     # Alias for `#translate`.

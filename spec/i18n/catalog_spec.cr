@@ -368,4 +368,123 @@ describe I18n::Catalog do
       end
     end
   end
+
+  describe "#localize" do
+    it "allows to localize a datetime using the default format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time).should eq "Mon, 15 Feb 2016 10:20:30 +0000"
+      catalog.activate("fr")
+      catalog.localize(time).should eq "15 février 2016 10h 20min 30s"
+    end
+
+    it "allows to localize a datetime using the short format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time, :short).should eq "15 Feb 10:20"
+      catalog.activate("fr")
+      catalog.localize(time, :short).should eq "15 fév. 10h20"
+    end
+
+    it "allows to localize a datetime using the long format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time, :long).should eq "February 15, 2016 10:20"
+      catalog.activate("fr")
+      catalog.localize(time, :long).should eq "lundi 15 février 2016 10h20"
+    end
+
+    it "allows to localize a datetime using a custom format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      catalog.activate("fr")
+      catalog.localize(time, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+    end
+
+    it "allows to localize a date using the default format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time.date).should eq "2016-02-15"
+      catalog.activate("fr")
+      catalog.localize(time.date).should eq "15/02/2016"
+    end
+
+    it "allows to localize a date using the short format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time.date, :short).should eq "Feb 15"
+      catalog.activate("fr")
+      catalog.localize(time.date, :short).should eq "15 fév."
+    end
+
+    it "allows to localize a date using the long format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time.date, :long).should eq "February 15, 2016"
+      catalog.activate("fr")
+      catalog.localize(time.date, :long).should eq "15 février 2016"
+    end
+
+    it "allows to localize a date using a custom format" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.localize(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      catalog.activate("fr")
+      catalog.localize(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+    end
+  end
+
+  describe "#l" do
+    it "is an alias for #localize" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      catalog.l(time).should eq "Mon, 15 Feb 2016 10:20:30 +0000"
+      catalog.l(time, :short).should eq "15 Feb 10:20"
+      catalog.l(time, :long).should eq "February 15, 2016 10:20"
+      catalog.l(time, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      catalog.l(time.date).should eq "2016-02-15"
+      catalog.l(time.date, :short).should eq "Feb 15"
+      catalog.l(time.date, :long).should eq "February 15, 2016"
+      catalog.l(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+
+      catalog.activate("fr")
+
+      catalog.l(time).should eq "15 février 2016 10h 20min 30s"
+      catalog.l(time, :short).should eq "15 fév. 10h20"
+      catalog.l(time, :long).should eq "lundi 15 février 2016 10h20"
+      catalog.l(time, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+      catalog.l(time.date).should eq "15/02/2016"
+      catalog.l(time.date, :short).should eq "15 fév."
+      catalog.l(time.date, :long).should eq "15 février 2016"
+      catalog.l(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+    end
+  end
 end

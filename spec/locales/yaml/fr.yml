@@ -1,4 +1,59 @@
 fr:
+  i18n:
+    date:
+      abbr_day_names:
+        - lun
+        - mar
+        - mer
+        - jeu
+        - ven
+        - sam
+        - dim
+      abbr_month_names:
+        - jan.
+        - fév.
+        - mar.
+        - avr.
+        - mai
+        - juin
+        - juil.
+        - août
+        - sept.
+        - oct.
+        - nov.
+        - déc.
+      day_names:
+        - lundi
+        - mardi
+        - mercredi
+        - jeudi
+        - vendredi
+        - samedi
+        - dimanche
+      month_names:
+        - janvier
+        - février
+        - mars
+        - avril
+        - mai
+        - juin
+        - juillet
+        - août
+        - septembre
+        - octobre
+        - novembre
+        - décembre
+      formats:
+        default: "%d/%m/%Y"
+        long: "%e %B %Y"
+        short: "%e %b"
+    time:
+      am: am
+      formats:
+        default: "%d %B %Y %Hh %Mmin %Ss"
+        long: "%A %d %B %Y %Hh%M"
+        short: "%d %b %Hh%M"
+      pm: pm
   top_level: "Il s'agit d'une traduction de niveau supérieur"
   simple:
     translation: "C'est une traduction simple"

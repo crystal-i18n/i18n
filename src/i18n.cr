@@ -38,6 +38,19 @@ require "./i18n/**"
 # I18n.t("simple.interpolation", name: "John Doe") # outputs "Hello, John Doe!"
 # I18n.t("simple.pluralization", count: 42)        # outputs "42 items"
 # ```
+#
+# ### Localization
+#
+# It is possible to localize date time objects using the `#localize` method (or the shorter version `#l`):
+#
+# ```
+# I18n.l(Time.local)                 # => Sun, 13 Dec 2020 21:11:08 -0500
+# I18n.l(Time.local, :short)         # => 13 Dec 21:11
+# I18n.l(Time.local.date)            # => 2020-12-13
+# I18n.l(Time.local.date, :long)     # => December 13, 2020
+# I18n.l(Time.local, "%a, %d %b %Y") # => Sun, 13 Dec 2020
+# ```
+#
 module I18n
   alias TranslationsHashValues = String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
@@ -90,6 +103,15 @@ module I18n
     @@catalog = Catalog.from_config(config)
   end
 
+  # Alias for `#localize`.
+  def self.l(
+    object : Time | Tuple(Int32, Int32, Int32),
+    format : String | Symbol = :default,
+    **kwargs
+  ) : String
+    localize(object, format, **kwargs)
+  end
+
   # Returns the currently active locale.
   #
   # The returned value will default to the default locale unless another locale is explicitly activated.
@@ -100,6 +122,27 @@ module I18n
   # Alias for `#activate`.
   def self.locale=(locale : String | Symbol) : String
     catalog.activate(locale)
+  end
+
+  # Localizes a datetime or a date.
+  #
+  # This method allows to localize a `Time` object or a `Tuple(Int32, Int32, Int32)` object (which correspond to a date
+  # obtained through the use of `Time#date`). Both time or "date" objects can be localized using a predefined format
+  # such as `:default`, `:short` or `:long`, but custom formats can be used as well:
+  #
+  # ```
+  # I18n.localize(Time.local)                 # => Sun, 13 Dec 2020 21:11:08 -0500
+  # I18n.localize(Time.local, :short)         # => 13 Dec 21:11
+  # I18n.localize(Time.local.date)            # => 2020-12-13
+  # I18n.localize(Time.local.date, :long)     # => December 13, 2020
+  # I18n.localize(Time.local, "%a, %d %b %Y") # => Sun, 13 Dec 2020
+  # ```
+  def self.localize(
+    object : Time | Tuple(Int32, Int32, Int32),
+    format : String | Symbol = :default,
+    **kwargs
+  ) : String
+    catalog.localize(object, format, **kwargs)
   end
 
   # Alias for `#translate`.

@@ -183,4 +183,56 @@ describe I18n do
       end
     end
   end
+
+  describe "#localize" do
+    it "allows to localize datetimes and dates" do
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      I18n.localize(time).should eq "Mon, 15 Feb 2016 10:20:30 +0000"
+      I18n.localize(time, :short).should eq "15 Feb 10:20"
+      I18n.localize(time, :long).should eq "February 15, 2016 10:20"
+      I18n.localize(time, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      I18n.localize(time.date).should eq "2016-02-15"
+      I18n.localize(time.date, :short).should eq "Feb 15"
+      I18n.localize(time.date, :long).should eq "February 15, 2016"
+      I18n.localize(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+
+      I18n.locale = "fr"
+
+      I18n.localize(time).should eq "15 février 2016 10h 20min 30s"
+      I18n.localize(time, :short).should eq "15 fév. 10h20"
+      I18n.localize(time, :long).should eq "lundi 15 février 2016 10h20"
+      I18n.localize(time, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+      I18n.localize(time.date).should eq "15/02/2016"
+      I18n.localize(time.date, :short).should eq "15 fév."
+      I18n.localize(time.date, :long).should eq "15 février 2016"
+      I18n.localize(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+    end
+  end
+
+  describe "#l" do
+    it "is an alias for #localize" do
+      time = Time.utc(2016, 2, 15, 10, 20, 30)
+
+      I18n.l(time).should eq "Mon, 15 Feb 2016 10:20:30 +0000"
+      I18n.l(time, :short).should eq "15 Feb 10:20"
+      I18n.l(time, :long).should eq "February 15, 2016 10:20"
+      I18n.l(time, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      I18n.l(time.date).should eq "2016-02-15"
+      I18n.l(time.date, :short).should eq "Feb 15"
+      I18n.l(time.date, :long).should eq "February 15, 2016"
+      I18n.l(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+
+      I18n.locale = "fr"
+
+      I18n.l(time).should eq "15 février 2016 10h 20min 30s"
+      I18n.l(time, :short).should eq "15 fév. 10h20"
+      I18n.l(time, :long).should eq "lundi 15 février 2016 10h20"
+      I18n.l(time, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+      I18n.l(time.date).should eq "15/02/2016"
+      I18n.l(time.date, :short).should eq "15 fév."
+      I18n.l(time.date, :long).should eq "15 février 2016"
+      I18n.l(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+    end
+  end
 end
