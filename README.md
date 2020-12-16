@@ -63,9 +63,12 @@ I18n.t("simple.interpolation", name: "John Doe") # outputs "Hello, John Doe!"
 I18n.t("simple.pluralization", count: 42)        # outputs "42 items"
 ```
 
+Please head over to the [documentation](https://crystal-i18n.github.io/i18n/) for a more complete overview of the `I18n` 
+module capabilities (including the configuration options, localization features, etc).
+
 ## Authors
 
-Morgan Aubert ([@ellmetha](https://github.com/ellmetha>`)) and 
+Morgan Aubert ([@ellmetha](https://github.com/ellmetha)) and 
 [contributors](https://github.com/crystal-i18n/i18n/contributors).
 
 ## License
