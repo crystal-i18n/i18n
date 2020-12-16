@@ -2,7 +2,7 @@
 .ideas/
 .vscode/
 /bin/
-/docs/
+/docs/node_modules
 /example_project/
 /example_projects/
 /test_project/
@@ -15,3 +15,5 @@
 .icr_*
 *.db
 /shard.lock
+/docs/src/.vuepress/dist
+/docs/src/.vuepress/public/ref
