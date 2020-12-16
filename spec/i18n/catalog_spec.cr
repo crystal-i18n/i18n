@@ -13,16 +13,23 @@ describe I18n::Catalog do
       catalog.default_locale.should eq "fr"
       catalog.locale.should eq "fr"
     end
+
+    it "is able to initialize a catalog of translations with a specific set of available locales" do
+      catalog = I18n::Catalog.new(available_locales: ["fr", "en"])
+      catalog.available_locales.should eq ["fr", "en"]
+    end
   end
 
   describe "::from_config" do
     it "is able to initialize a catalog of translations from a configuration object" do
       config = I18n::Config.new
+      config.available_locales = ["en", "fr"]
       config.default_locale = "fr"
       config.loaders << I18n::Loader::YAML.new("spec/locales/yaml")
 
       catalog = I18n::Catalog.from_config(config)
 
+      catalog.available_locales.should eq ["en", "fr"]
       catalog.default_locale.should eq "fr"
       catalog.locale.should eq "fr"
 

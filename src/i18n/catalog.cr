@@ -7,6 +7,7 @@ module I18n
     # The default locale that is considered when no other locales are configured nor activated.
     DEFAULT_LOCALE = "en"
 
+    @available_locales : Array(String)
     @locale : String?
 
     # Returns the default locale used by the catalog.
@@ -24,7 +25,8 @@ module I18n
     # translations.
     def self.from_config(config : Config) : self
       catalog = new(
-        default_locale: config.default_locale
+        default_locale: config.default_locale,
+        available_locales: config.available_locales
       )
 
       config.loaders.each do |loader|
@@ -35,9 +37,11 @@ module I18n
     end
 
     def initialize(
-      @default_locale : String = DEFAULT_LOCALE
+      @default_locale : String = DEFAULT_LOCALE,
+      available_locales : Array(String) | Nil = nil
     )
-      @available_locales = [] of String
+      @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
+      @available_locales = @available_locales_restricted_to.dup
       @locale = nil
       @translations = {} of String => String
     end
@@ -74,9 +78,14 @@ module I18n
     # catalog.inject(loader.load)
     # ```
     def inject(translations : TranslationsHash) : Nil
-      inject_and_normalize(translations)
+      effective_translations = translations.select do |locale, _|
+        @available_locales_restricted_to.empty? || @available_locales_restricted_to.includes?(locale)
+      end
+
+      inject_and_normalize(effective_translations)
+
       translations.keys.each do |locale|
-        @available_locales << locale
+        @available_locales << locale if !@available_locales.includes?(locale)
       end
     end
 

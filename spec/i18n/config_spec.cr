@@ -9,8 +9,33 @@ describe I18n::Config do
     end
   end
 
+  describe "#available_locales" do
+    it "returns nil if not explicitly configured" do
+      config = I18n::Config.new
+      config.available_locales.should be_nil
+    end
+
+    it "returns the configured available locales if applicable" do
+      config = I18n::Config.new
+      config.available_locales = [:en, "fr-CA"]
+      config.available_locales.should eq ["en", "fr-CA"]
+      config.available_locales = nil
+      config.available_locales.should be_nil
+    end
+  end
+
+  describe "#available_locales=" do
+    it "allows to configure the available available locales" do
+      config = I18n::Config.new
+      config.available_locales = [:en, "fr-CA"]
+      config.available_locales.should eq ["en", "fr-CA"]
+      config.available_locales = nil
+      config.available_locales.should be_nil
+    end
+  end
+
   describe "#default_locale" do
-    it "returns the expected default locale if not explicitlt configured" do
+    it "returns the expected default locale if not explicitly configured" do
       config = I18n::Config.new
       config.default_locale.should eq I18n::Catalog::DEFAULT_LOCALE
     end
