@@ -106,6 +106,7 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.translate("simple.translation").should eq "C'est une traduction simple"
+      I18n.translate("splitted.translation").should eq "Ceci est une traduction définie séparément"
       I18n.translate("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.translate(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
@@ -119,6 +120,7 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.t("simple.translation").should eq "C'est une traduction simple"
+      I18n.t("splitted.translation").should eq "Ceci est une traduction définie séparément"
       I18n.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
@@ -132,6 +134,7 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.translate!("simple.translation").should eq "C'est une traduction simple"
+      I18n.translate!("splitted.translation").should eq "Ceci est une traduction définie séparément"
       I18n.translate!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.translate!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
@@ -147,6 +150,7 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.t!("simple.translation").should eq "C'est une traduction simple"
+      I18n.t!("splitted.translation").should eq "Ceci est une traduction définie séparément"
       I18n.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"

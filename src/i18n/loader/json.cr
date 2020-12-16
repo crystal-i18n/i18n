@@ -7,13 +7,16 @@ module I18n
       def load : TranslationsHash
         raw_translations = [] of String
 
-        Dir.glob(@path + "/*.json") do |filename|
+        Dir.glob(@path + "/**/*.json") do |filename|
           raw_translations << File.read(filename)
         end
 
         translations_data = TranslationsHash.new
         raw_translations.each do |data|
-          translations_data.merge!(parsed_data_to_translations_hash(::JSON.parse(data)))
+          ::JSON.parse(data).as_h.each do |locale, locale_data|
+            translations_data[locale] ||= TranslationsHash.new
+            translations_data[locale].as(TranslationsHash).merge!(parsed_data_to_translations_hash(locale_data))
+          end
         end
 
         translations_data
