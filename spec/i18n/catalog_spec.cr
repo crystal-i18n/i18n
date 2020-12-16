@@ -213,6 +213,13 @@ describe I18n::Catalog do
       catalog.translate(:translation, scope: ["simple", "nested"]).should eq "This is a nested translation"
     end
 
+    it "can fallback to a default value if the translation is missing" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.translate("unknown.translation", default: "Hello").should eq "Hello"
+    end
+
     it "returns a default fallback string if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -294,6 +301,13 @@ describe I18n::Catalog do
       catalog.translate!(:translation, scope: ["simple", "nested"]).should eq "This is a nested translation"
     end
 
+    it "can fallback to a default value if the translation is missing" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.translate!("unknown.translation", default: "Hello").should eq "Hello"
+    end
+
     it "raises an error if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -316,6 +330,7 @@ describe I18n::Catalog do
       catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       catalog.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
+      catalog.t("unknown.translation", default: "Hello").should eq "Hello"
     end
   end
 
@@ -330,6 +345,7 @@ describe I18n::Catalog do
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       catalog.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
+      catalog.t!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
         catalog.t!("unknown.translation")
       end

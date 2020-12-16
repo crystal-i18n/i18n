@@ -190,9 +190,10 @@ module I18n
       key : String | Symbol,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      default = nil,
       **kwargs
     ) : String
-      translate(key, count, scope, **kwargs)
+      translate(key, count, scope, default, **kwargs)
     end
 
     # Alias for `#translate!`.
@@ -200,9 +201,10 @@ module I18n
       key : String | Symbol,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      default = nil,
       **kwargs
     ) : String
-      translate!(key, count, scope, **kwargs)
+      translate!(key, count, scope, default, **kwargs)
     end
 
     # Performs a translation lookup.
@@ -220,9 +222,10 @@ module I18n
       key : String | Symbol,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      default = nil,
       **kwargs
     ) : String
-      translate!(key, count, scope, **kwargs)
+      translate!(key, count, scope, default, **kwargs)
     rescue error : Errors::MissingTranslation
       error.message.to_s
     end
@@ -242,6 +245,7 @@ module I18n
       key : String | Symbol,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+      default = nil,
       **kwargs
     ) : String
       if scope.is_a?(Array)
@@ -253,7 +257,9 @@ module I18n
       key = suffix_key(locale, key)
       key = pluralized_key(key, count) unless count.nil?
 
-      entry = @translations.fetch(key) { raise Errors::MissingTranslation.new("missing translation: #{key}") }
+      entry = @translations.fetch(key) do
+        default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{key}") : default
+      end
 
       entry = interpolate(entry, "count", count) unless count.nil?
       kwargs.each do |variable_name, value|

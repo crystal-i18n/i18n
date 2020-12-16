@@ -150,9 +150,10 @@ module I18n
     key : String | Symbol,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    default = nil,
     **kwargs
   ) : String
-    translate(key, count, scope, **kwargs)
+    translate(key, count, scope, default, **kwargs)
   end
 
   # Alias for `#translate!`.
@@ -160,9 +161,10 @@ module I18n
     key : String | Symbol,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    default = nil,
     **kwargs
   ) : String
-    translate!(key, count, scope, **kwargs)
+    translate!(key, count, scope, default, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -180,9 +182,10 @@ module I18n
     key : String | Symbol,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    default = nil,
     **kwargs
   ) : String
-    catalog.translate(key, count, scope, **kwargs)
+    catalog.translate(key, count, scope, default, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -200,9 +203,10 @@ module I18n
     key : String | Symbol,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
+    default = nil,
     **kwargs
   ) : String
-    catalog.translate!(key, count, scope, **kwargs)
+    catalog.translate!(key, count, scope, default, **kwargs)
   end
 
   # Allows to activate a specific locale for a specific block.

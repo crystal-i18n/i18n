@@ -109,6 +109,7 @@ describe I18n do
       I18n.translate("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.translate(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
+      I18n.translate("unknown.translation", default: "Hello").should eq "Hello"
       I18n.translate("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
     end
   end
@@ -121,6 +122,7 @@ describe I18n do
       I18n.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
+      I18n.t("unknown.translation", default: "Hello").should eq "Hello"
       I18n.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
     end
   end
@@ -133,6 +135,7 @@ describe I18n do
       I18n.translate!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.translate!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
+      I18n.translate!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
         I18n.translate!("unknown.translation")
       end
@@ -147,6 +150,7 @@ describe I18n do
       I18n.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       I18n.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
+      I18n.t!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
         I18n.t!("unknown.translation")
       end
