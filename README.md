@@ -10,7 +10,7 @@
 <br />
 
 **Crystal I18n** is an internationalization library for the Crystal programming language. It provides a unified interface 
-allowing to provide translations and localized contents in a Crystal project.
+allowing to leverage translations and localized contents in a Crystal project.
 
 ## Documentation
 
