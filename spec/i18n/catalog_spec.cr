@@ -75,7 +75,7 @@ describe I18n::Catalog do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
 
-      catalog.available_locales.should eq ["en", "fr"]
+      catalog.available_locales.to_set.should eq ["en", "fr"].to_set
     end
 
     it "returns an array with the default locale in it if no translations are available yet" do

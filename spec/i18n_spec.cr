@@ -34,7 +34,7 @@ describe I18n do
 
   describe "#available_locales" do
     it "returns the available locales" do
-      I18n.available_locales.should eq ["en", "fr"]
+      I18n.available_locales.to_set.should eq ["en", "fr"].to_set
     end
 
     it "returns an array with the default locale in it if no translations are available yet" do
