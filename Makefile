@@ -15,7 +15,8 @@ init:
 .PHONY: docs
 ## Builds the documentation.
 docs:
-	crystal docs
+	crystal docs --output=docs/src/.vuepress/public/ref
+	cd docs && npm run build
 
 
 # QUALITY ASSURANCE
