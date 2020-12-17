@@ -1,6 +1,6 @@
 # Crystal I18n
 
-![logo](https://user-images.githubusercontent.com/3720615/102424757-da6d9580-3fd9-11eb-83fe-df8b57c36719.png)
+![logo](https://user-images.githubusercontent.com/3720615/102425097-a9419500-3fda-11eb-91bc-5d3069b26085.png)
 
 ![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)
 
