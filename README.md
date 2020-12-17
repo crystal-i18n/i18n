@@ -1,13 +1,10 @@
-<p align="center"><img src="docs/src/.vuepress/public/assets/img/logo.svg" width="150px;"></p>
-<h1 align="center">Crystal I18n</h1>
-<p align="center">An internationalization library for Crystal.</p>
-<p align="center">
-  <a href="https://github.com/crystal-i18n/i18n/actions?query=branch%3Amaster+workflow%3ACI">
-    <img alt="Build Status" src="https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg" />
-  </a>
-</p>
+# Crystal I18n
 
-<br />
+![logo](https://user-images.githubusercontent.com/3720615/102424757-da6d9580-3fd9-11eb-83fe-df8b57c36719.png)
+
+![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)
+
+---
 
 **Crystal I18n** is an internationalization library for the Crystal programming language. It provides a unified interface 
 allowing to leverage translations and localized contents in a Crystal project.
