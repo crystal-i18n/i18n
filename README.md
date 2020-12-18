@@ -1,6 +1,6 @@
 # Crystal I18n
 
-![logo](https://user-images.githubusercontent.com/3720615/102425097-a9419500-3fda-11eb-91bc-5d3069b26085.png)
+![logo](docs/src/.vuepress/public/assets/img/hero.svg)
 
 ![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)
 
