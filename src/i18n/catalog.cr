@@ -188,23 +188,25 @@ module I18n
     # Alias for `#translate`.
     def t(
       key : String | Symbol,
+      params : Hash | NamedTuple | Nil = nil,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
     ) : String
-      translate(key, count, scope, default, **kwargs)
+      translate(key, params, count, scope, default, **kwargs)
     end
 
     # Alias for `#translate!`.
     def t!(
       key : String | Symbol,
+      params : Hash | NamedTuple | Nil = nil,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
     ) : String
-      translate!(key, count, scope, default, **kwargs)
+      translate!(key, params, count, scope, default, **kwargs)
     end
 
     # Performs a translation lookup.
@@ -220,12 +222,13 @@ module I18n
     # ```
     def translate(
       key : String | Symbol,
+      params : Hash | NamedTuple | Nil = nil,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
     ) : String
-      translate!(key, count, scope, default, **kwargs)
+      translate!(key, params, count, scope, default, **kwargs)
     rescue error : Errors::MissingTranslation
       error.message.to_s
     end
@@ -243,6 +246,7 @@ module I18n
     # ```
     def translate!(
       key : String | Symbol,
+      params : Hash | NamedTuple | Nil = nil,
       count : Int? = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
@@ -262,6 +266,13 @@ module I18n
       end
 
       entry = interpolate(entry, "count", count) unless count.nil?
+
+      if !params.nil?
+        params.each do |variable_name, value|
+          entry = interpolate(entry, variable_name, value)
+        end
+      end
+
       kwargs.each do |variable_name, value|
         entry = interpolate(entry, variable_name, value)
       end

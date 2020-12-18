@@ -148,23 +148,25 @@ module I18n
   # Alias for `#translate`.
   def self.t(
     key : String | Symbol,
+    params : Hash | NamedTuple | Nil = nil,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
     **kwargs
   ) : String
-    translate(key, count, scope, default, **kwargs)
+    translate(key, params, count, scope, default, **kwargs)
   end
 
   # Alias for `#translate!`.
   def self.t!(
     key : String | Symbol,
+    params : Hash | NamedTuple | Nil = nil,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
     **kwargs
   ) : String
-    translate!(key, count, scope, default, **kwargs)
+    translate!(key, params, count, scope, default, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -180,12 +182,13 @@ module I18n
   # ```
   def self.translate(
     key : String | Symbol,
+    params : Hash | NamedTuple | Nil = nil,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
     **kwargs
   ) : String
-    catalog.translate(key, count, scope, default, **kwargs)
+    catalog.translate(key, params, count, scope, default, **kwargs)
   end
 
   # Performs a translation lookup.
@@ -201,12 +204,13 @@ module I18n
   # ```
   def self.translate!(
     key : String | Symbol,
+    params : Hash | NamedTuple | Nil = nil,
     count : Int? = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
     **kwargs
   ) : String
-    catalog.translate!(key, count, scope, default, **kwargs)
+    catalog.translate!(key, params, count, scope, default, **kwargs)
   end
 
   # Allows to activate a specific locale for a specific block.

@@ -220,6 +220,27 @@ describe I18n::Catalog do
       catalog.translate("unknown.translation", default: "Hello").should eq "Hello"
     end
 
+    it "can return a translated string involving interpolated values with params specified as a hash" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      params = Hash(String, String).new
+      params["name"] = "John"
+
+      catalog.locale = "fr"
+      catalog.translate("simple.interpolation", params).should eq "Bonjour, John!"
+    end
+
+    it "can return a translated string involving interpolated values with params specified as a named tuple" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      params = {name: "John"}
+
+      catalog.locale = "fr"
+      catalog.translate("simple.interpolation", params).should eq "Bonjour, John!"
+    end
+
     it "returns a default fallback string if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -308,6 +329,27 @@ describe I18n::Catalog do
       catalog.translate!("unknown.translation", default: "Hello").should eq "Hello"
     end
 
+    it "can return a translated string involving interpolated values with params specified as a hash" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      params = Hash(String, String).new
+      params["name"] = "John"
+
+      catalog.locale = "fr"
+      catalog.translate!("simple.interpolation", params).should eq "Bonjour, John!"
+    end
+
+    it "can return a translated string involving interpolated values with params specified as a named tuple" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      params = {name: "John"}
+
+      catalog.locale = "fr"
+      catalog.translate!("simple.interpolation", params).should eq "Bonjour, John!"
+    end
+
     it "raises an error if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -327,6 +369,7 @@ describe I18n::Catalog do
 
       catalog.t("simple.translation").should eq "C'est une traduction simple"
       catalog.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
+      catalog.t("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
       catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       catalog.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
@@ -343,6 +386,7 @@ describe I18n::Catalog do
 
       catalog.t!("simple.translation").should eq "C'est une traduction simple"
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
+      catalog.t!("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
       catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
       catalog.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t!("unknown.translation", default: "Hello").should eq "Hello"
