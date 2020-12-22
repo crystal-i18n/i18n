@@ -2,7 +2,7 @@
 
 ![logo](docs/src/.vuepress/public/assets/img/hero.svg)
 
-![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)
+[![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)](https://github.com/crystal-i18n/i18n/actions)
 
 ---
 
