@@ -6,7 +6,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class OneTwoOther < Rule
-        def apply(count : Int) : Symbol
+        def apply(count : Float | Int) : Symbol
           if count == 1
             :one
           elsif count == 2

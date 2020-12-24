@@ -7,7 +7,7 @@ module I18n
     # [by the CLDR](http://cldr.unicode.org/index/cldr-spec/plural-rules) (`:zero`, `:one`, `:two`, `:few`, `:many` and
     # `:other`).
     abstract class Rule
-      abstract def apply(count : Int) : Symbol
+      abstract def apply(count : Float | Int) : Symbol
     end
   end
 end

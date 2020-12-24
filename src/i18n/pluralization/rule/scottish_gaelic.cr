@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class ScottishGaelic < Rule
-        def apply(count : Int) : Symbol
+        def apply(count : Float | Int) : Symbol
           if count == 1 || count == 11
             :one
           elsif count == 2 || count == 12

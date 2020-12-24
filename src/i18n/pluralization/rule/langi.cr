@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class Langi < Rule
-        def apply(count : Int) : Symbol
+        def apply(count : Float | Int) : Symbol
           if count == 0
             :zero
           elsif count > 0 && count < 2

@@ -5,7 +5,7 @@ module I18n
       #
       # This rule was initially extracted from [rails-i18n](https://github.com/svenfuchs/rails-i18n).
       class Slovenian < Rule
-        def apply(count : Int) : Symbol
+        def apply(count : Float | Int) : Symbol
           mod100 = count % 100
 
           if mod100 == 1
