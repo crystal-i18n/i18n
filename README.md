@@ -68,6 +68,12 @@ module capabilities (including the configuration options, localization features,
 Morgan Aubert ([@ellmetha](https://github.com/ellmetha)) and 
 [contributors](https://github.com/crystal-i18n/i18n/contributors).
 
+## Credits
+
+Crystal I18n initially draws its inspiration from [Ruby I18n](https://github.com/ruby-i18n/i18n) and 
+[rails-i18n](https://github.com/svenfuchs/rails-i18n). Originally, pluralization and localization rules all come from
+[rails-i18n](https://github.com/svenfuchs/rails-i18n) as well.
+
 ## License
 
 MIT. See ``LICENSE`` for more details.
