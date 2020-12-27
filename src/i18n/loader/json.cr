@@ -30,7 +30,7 @@ module I18n
                               v.as_s
                             elsif v.as_i?
                               v.as_i
-                            elsif v.as_bool?
+                            elsif !v.as_bool?.nil?
                               v.as_bool
                             elsif v.as_a?
                               v.as_a.map(&.as_s)
