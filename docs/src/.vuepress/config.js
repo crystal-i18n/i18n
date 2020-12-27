@@ -16,6 +16,7 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
+    ['link', { rel: 'icon', href: '/assets/img/favicon.png' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
@@ -43,9 +44,21 @@ module.exports = {
     sidebar: {
       '/': [
         {
+          title: 'Guide',
           collapsable: false,
           children: [
-            '',
+            'getting_started',
+            'translation_lookups',
+            'localization',
+            'configuration',
+          ]
+        },
+        {
+          title: 'Advanced',
+          collapsable: false,
+          children: [
+            'pluralization_rules',
+            'translations_hash_specification',
           ]
         }
       ],
