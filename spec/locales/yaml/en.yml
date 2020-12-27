@@ -54,6 +54,20 @@ en:
         long: "%B %d, %Y %H:%M"
         short: "%d %b %H:%M"
       pm: pm
+    number:
+      formats:
+        default:
+          delimiter: ","
+          separator: "."
+          decimal_places: 3
+          group: 3
+          only_significant: false
+        custom:
+          delimiter: ","
+          separator: "."
+          decimal_places: 2
+          group: 3
+          only_significant: true
   top_level: "This is a top-level translation"
   simple:
     translation: "This is a simple translation"

@@ -104,6 +104,11 @@ module I18n
   end
 
   # Alias for `#localize`.
+  def self.l(object : Number, format : String | Symbol = :default) : String
+    localize(object, format)
+  end
+
+  # Alias for `#localize`.
   def self.l(
     object : Time | Tuple(Int32, Int32, Int32),
     format : String | Symbol = :default,
@@ -122,6 +127,19 @@ module I18n
   # Alias for `#activate`.
   def self.locale=(locale : String | Symbol) : String
     catalog.activate(locale)
+  end
+
+  # Localizes a number.
+  #
+  # This method allows to localize a `Number` object (such as an integer or a float). By default, the `:default` format
+  # is used, but custom formats can be used as well:
+  #
+  # ```
+  # I18n.localize(123_456.789)          # => 123,456.789
+  # I18n.localize(123_456.789, :custom) # => 123,456.79
+  # ```
+  def self.localize(object : Number, format : String | Symbol = :default) : String
+    catalog.localize(object, format)
   end
 
   # Localizes a datetime or a date.

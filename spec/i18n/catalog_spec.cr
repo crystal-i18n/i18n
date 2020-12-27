@@ -554,6 +554,24 @@ describe I18n::Catalog do
       catalog.activate("fr")
       catalog.localize(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
     end
+
+    it "allows to localize numbers" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.localize(123_456.789).should eq "123,456.789"
+      catalog.activate("fr")
+      catalog.localize(123_456.789).should eq "123 456,789"
+    end
+
+    it "allows to localize numbers using custom formats" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.localize(123_456.789, :custom).should eq "123,456.79"
+      catalog.activate("fr")
+      catalog.localize(123_456.789, :custom).should eq "123 456,79"
+    end
   end
 
   describe "#l" do
@@ -571,6 +589,8 @@ describe I18n::Catalog do
       catalog.l(time.date, :short).should eq "Feb 15"
       catalog.l(time.date, :long).should eq "February 15, 2016"
       catalog.l(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      catalog.l(123_456.789).should eq "123,456.789"
+      catalog.l(123_456.789, :custom).should eq "123,456.79"
 
       catalog.activate("fr")
 
@@ -582,6 +602,8 @@ describe I18n::Catalog do
       catalog.l(time.date, :short).should eq "15 fév."
       catalog.l(time.date, :long).should eq "15 février 2016"
       catalog.l(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+      catalog.l(123_456.789).should eq "123 456,789"
+      catalog.l(123_456.789, :custom).should eq "123 456,79"
     end
   end
 end

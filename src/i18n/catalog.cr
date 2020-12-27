@@ -92,6 +92,11 @@ module I18n
     end
 
     # Alias for `#localize`.
+    def l(object : Number, format : String | Symbol = :default) : String
+      localize(object, format)
+    end
+
+    # Alias for `#localize`.
     def l(
       object : Time | Tuple(Int32, Int32, Int32),
       format : String | Symbol = :default,
@@ -110,6 +115,55 @@ module I18n
     # Alias for `#activate`.
     def locale=(locale : String | Symbol) : String
       activate(locale)
+    end
+
+    # Localizes a number.
+    #
+    # This method allows to localize a `Number` object (such as an integer or a float). By default, the `:default`
+    # format is used:
+    #
+    # ```
+    # I18n.localize(123_456.789) # => 123,456.789
+    # ```
+    #
+    # Custom formats can be used as well, for example:
+    #
+    # ```
+    # I18n.localize(123_456.789, :custom) # => 123,456.79
+    # ```
+    #
+    # This method requires the following structure to be defined in localization files (the following example uses YAML,
+    # but this can be easily applied to JSON files too):
+    #
+    # ```
+    # en:
+    #   i18n:
+    #     number:
+    #       formats:
+    #         default:
+    #           delimiter: ","
+    #           separator: "."
+    #           decimal_places: 3
+    #           group: 3
+    #           only_significant: false
+    # ````
+    #
+    # Custom formats can be defined under `i18n.number.formats` in order to use other combinations of delimiters,
+    # separators, decimal places, etc.
+    def localize(object : Number, format : String | Symbol = :default) : String
+      separator = fetch_translation(locale, "i18n.number.formats.#{format}.separator")
+      delimiter = fetch_translation(locale, "i18n.number.formats.#{format}.delimiter")
+      decimal_places = fetch_translation(locale, "i18n.number.formats.#{format}.decimal_places")
+      group = fetch_translation(locale, "i18n.number.formats.#{format}.group")
+      only_significant = fetch_translation(locale, "i18n.number.formats.#{format}.only_significant")
+
+      object.format(
+        separator: separator.as?(String) || '.',
+        delimiter: delimiter.as?(String) || ',',
+        decimal_places: decimal_places.as?(Int32),
+        group: group.as?(Int32) || 3,
+        only_significant: only_significant.as?(Bool) || false,
+      )
     end
 
     # Localizes a datetime or a date.
