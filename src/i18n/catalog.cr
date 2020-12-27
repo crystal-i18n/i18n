@@ -45,7 +45,7 @@ module I18n
       @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
       @available_locales = @available_locales_restricted_to.dup
       @locale = nil
-      @translations = {} of String => String
+      @translations = {} of String => Bool | Int32 | String
     end
 
     # Activates a locale for translations.
@@ -260,7 +260,7 @@ module I18n
         key = suffix_key(scope.to_s, key)
       end
 
-      entry = fetch_translation(locale, key, count: count, default: default).not_nil!
+      entry = fetch_translation(locale, key, count: count, default: default).not_nil!.to_s
 
       entry = interpolate(entry, "count", count) unless count.nil?
 
@@ -323,7 +323,7 @@ module I18n
       translations.each do |key, data|
         current_path = path.empty? ? key : suffix_key(path, key)
 
-        if data.is_a?(String)
+        if data.is_a?(Bool | Int32 | String)
           @translations[current_path] = data
         elsif data.is_a?(Array)
           data.each_with_index do |value, i|

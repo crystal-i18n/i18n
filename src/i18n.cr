@@ -52,7 +52,7 @@ require "./i18n/**"
 # ```
 #
 module I18n
-  alias TranslationsHashValues = String | Array(String) | Hash(String, TranslationsHashValues)
+  alias TranslationsHashValues = Bool | Int32 | String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
   @@config : Config?

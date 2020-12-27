@@ -28,6 +28,10 @@ module I18n
         data.as_h.each do |k, v|
           translations[k] = if v.as_s?
                               v.as_s
+                            elsif v.as_i?
+                              v.as_i
+                            elsif v.as_bool?
+                              v.as_bool
                             elsif v.as_a?
                               v.as_a.map(&.as_s)
                             else
