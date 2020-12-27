@@ -241,6 +241,21 @@ describe I18n::Catalog do
       catalog.translate("simple.interpolation", params).should eq "Bonjour, John!"
     end
 
+    it "makes use of fallbacks when fallbacks are configured" do
+      catalog = I18n::Catalog.new(
+        default_locale: "en",
+        available_locales: ["fr-CA-special", "fr-CA", "fr", "en"],
+        fallbacks: I18n::Locale::Fallbacks.new({"fr-CA-special": ["fr-CA", "fr", "en"]})
+      )
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.activate("fr-CA-special")
+      catalog.translate("simple.translation").should eq "C'est une traduction simple"
+
+      catalog.activate("en")
+      catalog.translate("simple.translation").should eq "This is a simple translation"
+    end
+
     it "returns a default fallback string if the translation is missing" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -348,6 +363,21 @@ describe I18n::Catalog do
 
       catalog.locale = "fr"
       catalog.translate!("simple.interpolation", params).should eq "Bonjour, John!"
+    end
+
+    it "makes use of fallbacks when fallbacks are configured" do
+      catalog = I18n::Catalog.new(
+        default_locale: "en",
+        available_locales: ["fr-CA-special", "fr-CA", "fr", "en"],
+        fallbacks: I18n::Locale::Fallbacks.new({"fr-CA-special": ["fr-CA", "fr", "en"]})
+      )
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+
+      catalog.activate("fr-CA-special")
+      catalog.translate!("simple.translation").should eq "C'est une traduction simple"
+
+      catalog.activate("en")
+      catalog.translate!("simple.translation").should eq "This is a simple translation"
     end
 
     it "raises an error if the translation is missing" do

@@ -6,6 +6,7 @@ module I18n
   # configure a custom catalog of translations through the use of the `I18n::Catalog#from_config` class method.
   class Config
     @available_locales : Array(String) | Nil
+    @fallbacks : Locale::Fallbacks | Nil
 
     # Returns the available locales.
     #
@@ -16,6 +17,11 @@ module I18n
     #
     # Unless explicitly set, the default locale will be `"en"`.
     getter default_locale
+
+    # Returns the configured locale fallbacks.
+    #
+    # Unless explicitly set, the default value will be `nil`.
+    getter fallbacks
 
     def initialize
       @available_locales = nil
@@ -37,6 +43,57 @@ module I18n
     # Unless explicitly set with this method, the default locale will be `"en"`.
     def default_locale=(locale : String | Symbol)
       @default_locale = locale.to_s
+    end
+
+    # Allows to set the locale fallbacks.
+    #
+    # Setting locale fallbacks will force catalogs of translations to try to lookup translations in other (configured)
+    # locales if the current locale the translation is requested into is missing.
+    #
+    # The passed `fallback` can be a hash or a named tuple that defines the chains of fallbacks to use for specific
+    # locales. For example:
+    #
+    # ```
+    # I18n.config.fallbacks = {"en-CA" => ["en-US", "en"], "fr-CA" => "fr"}
+    # ```
+    #
+    # It can also be a simple array of fallbacks. In that case, this chain of fallbacked locales will be used as a
+    # default for all the available locales when translations are missing:
+    #
+    # ```
+    # I18n.config.fallbacks = ["en-US", "en"]
+    # ```
+    #
+    # It's also possible to specficy both default fallbacks and a mapping of fallbacks by initializing an
+    # `I18n::Locale::Fallbacks` object as follows:
+    #
+    # ```
+    # I18n.config.fallbacks = I18n::Locale::Fallbacks.new(
+    #   {"fr-CA-special": ["fr-CA", "fr", "en"]},
+    #   default: ["en"]
+    # )
+    # ```
+    #
+    # Finally, using `nil` in the context of this method will reset the configured fallbacks (and remove any previously
+    # configured fallbacks).
+    #
+    # It's also important to always ensure that fallback locales are available locales: they should all be present in
+    # the `#available_locales` array.
+    def fallbacks=(
+      fallbacks : Array(String | Symbol) |
+                  Hash(String | Symbol, Array(String | Symbol) | String | Symbol) |
+                  Locale::Fallbacks |
+                  NamedTuple |
+                  Nil
+    )
+      @fallbacks = case fallbacks
+                   when Array
+                     Locale::Fallbacks.new(default: fallbacks)
+                   when Hash, NamedTuple
+                     Locale::Fallbacks.new(mapping: fallbacks)
+                   else
+                     fallbacks
+                   end
     end
 
     # Returns the list of configured translations loaders.

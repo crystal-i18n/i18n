@@ -26,7 +26,8 @@ module I18n
     def self.from_config(config : Config) : self
       catalog = new(
         default_locale: config.default_locale,
-        available_locales: config.available_locales
+        available_locales: config.available_locales,
+        fallbacks: config.fallbacks
       )
 
       config.loaders.each do |loader|
@@ -38,7 +39,8 @@ module I18n
 
     def initialize(
       @default_locale : String = DEFAULT_LOCALE,
-      available_locales : Array(String) | Nil = nil
+      available_locales : Array(String) | Nil = nil,
+      @fallbacks : Locale::Fallbacks | Nil = nil
     )
       @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
       @available_locales = @available_locales_restricted_to.dup
@@ -258,12 +260,7 @@ module I18n
         key = suffix_key(scope.to_s, key)
       end
 
-      key = suffix_key(locale, key)
-      key = pluralized_key(key, count) unless count.nil?
-
-      entry = @translations.fetch(key) do
-        default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{key}") : default
-      end
+      entry = fetch_translation(locale, key, count: count, default: default).not_nil!
 
       entry = interpolate(entry, "count", count) unless count.nil?
 
@@ -302,6 +299,24 @@ module I18n
       yield
     ensure
       self.locale = current_locale || default_locale
+    end
+
+    private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
+      full_key = suffix_key(locale, key)
+      full_key = pluralized_key(full_key, count) unless count.nil?
+
+      result = if @fallbacks.nil? || ongoing_fallback
+                 @translations[full_key]?
+               else
+                 @fallbacks.not_nil!.for(locale).each do |fallback|
+                   r = fetch_translation(fallback, key, count: count, default: default, ongoing_fallback: true)
+                   break r if !r.nil?
+                 end
+               end
+
+      return result if !result.nil? || ongoing_fallback
+
+      default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{full_key}") : default
     end
 
     private def inject_and_normalize(translations : TranslationsHash, path : String = "")

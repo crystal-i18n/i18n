@@ -73,4 +73,58 @@ describe I18n::Config do
       config.loaders.size.should eq 1
     end
   end
+
+  describe "#fallbacks" do
+    it "returns nil by default" do
+      config = I18n::Config.new
+      config.fallbacks.should be_nil
+    end
+
+    it "returns the configured fallbacks if applicable" do
+      config = I18n::Config.new
+      config.fallbacks = I18n::Locale::Fallbacks.new({"fr-CA-special": ["fr-CA", "fr", "en"]})
+      config.fallbacks.should be_a I18n::Locale::Fallbacks
+    end
+  end
+
+  describe "#fallbacks=" do
+    it "allows to reset the configured fallbacks when nil is used" do
+      config = I18n::Config.new
+      config.fallbacks = I18n::Locale::Fallbacks.new({"fr-CA-special" => ["fr-CA", "fr", "en"]})
+      config.fallbacks = nil
+      config.fallbacks.should be_nil
+    end
+
+    it "allows to specify a fallback mapping directly from a hash" do
+      config = I18n::Config.new
+      config.fallbacks = {"fr-CA-special" => ["fr-CA", "fr", "en"], "en-US" => "en"}
+      config.fallbacks.should be_a I18n::Locale::Fallbacks
+      config.fallbacks.not_nil!.mapping.should eq({"fr-CA-special" => ["fr-CA", "fr", "en"], "en-US" => ["en"]})
+      config.fallbacks.not_nil!.default.should be_empty
+    end
+
+    it "allows to specify a fallback mapping directly from a named tuple" do
+      config = I18n::Config.new
+      config.fallbacks = {en: "fr"}
+      config.fallbacks.should be_a I18n::Locale::Fallbacks
+      config.fallbacks.not_nil!.mapping.should eq({"en" => ["fr"]})
+      config.fallbacks.not_nil!.default.should be_empty
+    end
+
+    it "allows to specify a default fallback chain from an array" do
+      config = I18n::Config.new
+      config.fallbacks = ["en-US", "en"]
+      config.fallbacks.should be_a I18n::Locale::Fallbacks
+      config.fallbacks.not_nil!.mapping.should be_empty
+      config.fallbacks.not_nil!.default.should eq ["en-US", "en"]
+    end
+
+    it "allows to specify a fallback object" do
+      config = I18n::Config.new
+      config.fallbacks = I18n::Locale::Fallbacks.new({"fr-CA-special": ["fr-CA", "fr", "en"]}, default: ["en-US", "en"])
+      config.fallbacks.should be_a I18n::Locale::Fallbacks
+      config.fallbacks.not_nil!.mapping.should eq({"fr-CA-special" => ["fr-CA", "fr", "en"]})
+      config.fallbacks.not_nil!.default.should eq ["en-US", "en"]
+    end
+  end
 end
