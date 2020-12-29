@@ -31,7 +31,7 @@ module I18n
       )
 
       config.loaders.each do |loader|
-        catalog.inject(loader.load)
+        catalog.inject(loader)
       end
 
       catalog
@@ -67,6 +67,11 @@ module I18n
     # be returned.
     def available_locales : Array(String)
       @available_locales.empty? ? [default_locale] : @available_locales
+    end
+
+    # Injects the hash of translations returned by a specific loader.
+    def inject(loader : Loader::Base)
+      inject(loader.load)
     end
 
     # Injects a hash of translations into the catalog.

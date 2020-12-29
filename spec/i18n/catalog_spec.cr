@@ -86,6 +86,18 @@ describe I18n::Catalog do
   end
 
   describe "#inject" do
+    it "injects a specific loader into the catalog" do
+      catalog = I18n::Catalog.new
+
+      expect_raises(I18n::Errors::MissingTranslation, "missing translation: en.simple.translation") do
+        catalog.translate!("simple.translation")
+      end
+
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml"))
+
+      catalog.translate!("simple.translation").should eq "This is a simple translation"
+    end
+
     it "injects a hash of translations into the catalog" do
       catalog = I18n::Catalog.new
 
