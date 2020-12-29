@@ -48,6 +48,7 @@ module.exports = {
           collapsable: false,
           children: [
             'getting_started',
+            'locales_activation',
             'translation_lookups',
             'localization',
             'configuration',
@@ -57,6 +58,7 @@ module.exports = {
           title: 'Advanced',
           collapsable: false,
           children: [
+            'translation_catalogs',
             'pluralization_rules',
             'translations_hash_specification',
           ]

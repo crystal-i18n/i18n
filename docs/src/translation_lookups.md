@@ -1,3 +1,11 @@
 # Translation lookups
 
-TODO.
+## Simple lookups
+
+## Interpolations
+
+## Pluralization
+
+## Defaults
+
+## Scopes
