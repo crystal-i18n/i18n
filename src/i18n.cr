@@ -55,9 +55,6 @@ module I18n
   alias TranslationsHashValues = Bool | Int32 | String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
-  @@config : Config?
-  @@catalog : Catalog?
-
   # Activates a locale for translations.
   #
   # This method allows to set the locale used to produce translated contents. Note that once activated, the current
@@ -81,7 +78,11 @@ module I18n
   #
   # This methods return the main `I18n::Config` object used by the `I18n` module to persist configuration options.
   def self.config : Config
-    @@config ||= Config.new
+    if (config = Fiber.current.i18n_config).nil?
+      Fiber.current.i18n_config = I18n::Config.new
+    else
+      config
+    end
   end
 
   # Allows to replace the main configuration object.
@@ -90,7 +91,7 @@ module I18n
   # catalog of translation. Calling `#init` once the new `I18n::Config` object has been assigned might be necessary in
   # order to ensure that the main catalog of translations used by the `I18n` module is reinitialized.
   def self.config=(config : Config) : Config
-    @@config = config
+    Fiber.current.i18n_config = config
   end
 
   # Initializes the `I18n` module.
@@ -100,7 +101,7 @@ module I18n
   # the main catalog of translations. Calling this will ensure that the translations files that were defined using
   # `I18n::Config#loaders` are read and processed in order to allow further translations lookups.
   def self.init : Nil
-    @@catalog = Catalog.from_config(config)
+    Fiber.current.i18n_catalog = Catalog.from_config(config)
   end
 
   # Alias for `#localize`.
@@ -252,6 +253,10 @@ module I18n
   end
 
   private def self.catalog
-    @@catalog ||= Catalog.new
+    if (catalog = Fiber.current.i18n_catalog).nil?
+      Fiber.current.i18n_catalog = Catalog.from_config(config)
+    else
+      catalog
+    end
   end
 end

@@ -30,6 +30,19 @@ describe I18n do
         I18n.activate("xy")
       end
     end
+
+    it "is scoped to the current fiber" do
+      I18n.locale.should eq "en"
+
+      spawn do
+        I18n.config.available_locales = [:en, :fr]
+        I18n.activate("fr")
+      end
+
+      sleep 1.second
+
+      I18n.locale.should eq "en"
+    end
   end
 
   describe "#available_locales" do
@@ -56,6 +69,18 @@ describe I18n do
       new_config = I18n::Config.new
       I18n.config = new_config
       I18n.config.should eq new_config
+    end
+
+    it "is scoped to the current fiber" do
+      config = I18n::Config.new
+
+      spawn do
+        I18n.config = config
+      end
+
+      sleep 1.second
+
+      I18n.config.should_not eq config
     end
   end
 
@@ -98,6 +123,19 @@ describe I18n do
       expect_raises(I18n::Errors::InvalidLocale, "xy is not a valid locale") do
         I18n.locale = "xy"
       end
+    end
+
+    it "is scoped to the current fiber" do
+      I18n.locale.should eq "en"
+
+      spawn do
+        I18n.config.available_locales = [:en, :fr]
+        I18n.locale = "fr"
+      end
+
+      sleep 1.second
+
+      I18n.locale.should eq "en"
     end
   end
 
