@@ -185,6 +185,12 @@ describe I18n::Catalog do
       catalog.translate("simple.pluralization", count: 42).should eq "42 items"
     end
 
+    it "can return a translated and pluralized string with a float count" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate("simple.pluralization", count: 1.5).should eq "1.5 items"
+    end
+
     it "always ensure that zero pluralization rules have precedence if applicable" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -307,6 +313,12 @@ describe I18n::Catalog do
       catalog.translate!("simple.pluralization", count: 42).should eq "42 items"
     end
 
+    it "can return a translated and pluralized string with a float count" do
+      catalog = I18n::Catalog.new
+      catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
+      catalog.translate!("simple.pluralization", count: 1.5).should eq "1.5 items"
+    end
+
     it "always ensure that zero pluralization rules have precedence if applicable" do
       catalog = I18n::Catalog.new
       catalog.inject(I18n::Loader::YAML.new("spec/locales/yaml").load)
@@ -413,6 +425,7 @@ describe I18n::Catalog do
       catalog.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
       catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
+      catalog.t("simple.pluralization", count: 5.5).should eq "5.5 objets"
       catalog.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
       catalog.t("unknown.translation", default: "Hello").should eq "Hello"
@@ -430,6 +443,7 @@ describe I18n::Catalog do
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t!("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
       catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
+      catalog.t!("simple.pluralization", count: 5.5).should eq "5.5 objets"
       catalog.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do

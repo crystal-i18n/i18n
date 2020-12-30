@@ -250,7 +250,7 @@ module I18n
     def t(
       key : String | Symbol,
       params : Hash | NamedTuple | Nil = nil,
-      count : Int? = nil,
+      count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
@@ -262,7 +262,7 @@ module I18n
     def t!(
       key : String | Symbol,
       params : Hash | NamedTuple | Nil = nil,
-      count : Int? = nil,
+      count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
@@ -284,7 +284,7 @@ module I18n
     def translate(
       key : String | Symbol,
       params : Hash | NamedTuple | Nil = nil,
-      count : Int? = nil,
+      count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
@@ -308,7 +308,7 @@ module I18n
     def translate!(
       key : String | Symbol,
       params : Hash | NamedTuple | Nil = nil,
-      count : Int? = nil,
+      count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
       **kwargs
