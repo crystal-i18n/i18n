@@ -264,11 +264,13 @@ describe I18n do
     end
 
     it "allows to localize numbers" do
+      I18n.localize(123_456).should eq "123,456"
       I18n.localize(123_456.789).should eq "123,456.789"
       I18n.localize(123_456.789, :custom).should eq "123,456.79"
 
       I18n.locale = "fr"
 
+      I18n.localize(123_456).should eq "123 456"
       I18n.localize(123_456.789).should eq "123 456,789"
       I18n.localize(123_456.789, :custom).should eq "123 456,79"
     end
@@ -286,6 +288,7 @@ describe I18n do
       I18n.l(time.date, :short).should eq "Feb 15"
       I18n.l(time.date, :long).should eq "February 15, 2016"
       I18n.l(time.date, "%a, %d %b %Y").should eq "Mon, 15 Feb 2016"
+      I18n.l(123_456).should eq "123,456"
       I18n.l(123_456.789).should eq "123,456.789"
       I18n.l(123_456.789, :custom).should eq "123,456.79"
 
@@ -299,6 +302,7 @@ describe I18n do
       I18n.l(time.date, :short).should eq "15 fév."
       I18n.l(time.date, :long).should eq "15 février 2016"
       I18n.l(time.date, "%a, %d %b %Y").should eq "lun, 15 fév. 2016"
+      I18n.l(123_456).should eq "123 456"
       I18n.l(123_456.789).should eq "123 456,789"
       I18n.l(123_456.789, :custom).should eq "123 456,79"
     end

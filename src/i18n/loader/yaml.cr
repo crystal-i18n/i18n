@@ -34,8 +34,10 @@ module I18n
                                    v.as_bool
                                  elsif v.as_a?
                                    v.as_a.map(&.as_s)
-                                 else
+                                 elsif v.as_h?
                                    parsed_data_to_translations_hash(v.clone)
+                                 else
+                                   v.as_nil
                                  end
         end
 

@@ -59,7 +59,7 @@ fr:
         default:
           delimiter: " "
           separator: ","
-          decimal_places: 3
+          decimal_places: null
           group: 3
           only_significant: false
         custom:

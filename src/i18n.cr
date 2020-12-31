@@ -52,7 +52,7 @@ require "./i18n/**"
 # ```
 #
 module I18n
-  alias TranslationsHashValues = Bool | Int32 | String | Array(String) | Hash(String, TranslationsHashValues)
+  alias TranslationsHashValues = Bool | Int32 | Nil | String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
   # Activates a locale for translations.

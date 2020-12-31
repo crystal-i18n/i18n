@@ -45,7 +45,7 @@ module I18n
       @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
       @available_locales = @available_locales_restricted_to.dup
       @locale = nil
-      @translations = {} of String => Bool | Int32 | String
+      @translations = {} of String => Bool | Int32 | Nil | String
     end
 
     # Activates a locale for translations.
@@ -156,11 +156,11 @@ module I18n
     # Custom formats can be defined under `i18n.number.formats` in order to use other combinations of delimiters,
     # separators, decimal places, etc.
     def localize(object : Number, format : String | Symbol = :default) : String
-      separator = fetch_translation(locale, "i18n.number.formats.#{format}.separator")
-      delimiter = fetch_translation(locale, "i18n.number.formats.#{format}.delimiter")
-      decimal_places = fetch_translation(locale, "i18n.number.formats.#{format}.decimal_places")
-      group = fetch_translation(locale, "i18n.number.formats.#{format}.group")
-      only_significant = fetch_translation(locale, "i18n.number.formats.#{format}.only_significant")
+      separator = fetch_translation(locale, "i18n.number.formats.#{format}.separator", no_raise: true)
+      delimiter = fetch_translation(locale, "i18n.number.formats.#{format}.delimiter", no_raise: true)
+      decimal_places = fetch_translation(locale, "i18n.number.formats.#{format}.decimal_places", no_raise: true)
+      group = fetch_translation(locale, "i18n.number.formats.#{format}.group", no_raise: true)
+      only_significant = fetch_translation(locale, "i18n.number.formats.#{format}.only_significant", no_raise: true)
 
       object.format(
         separator: separator.as?(String) || '.',
@@ -360,7 +360,7 @@ module I18n
       self.locale = current_locale || default_locale
     end
 
-    private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
+    private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false, no_raise = false)
       full_key = suffix_key(locale, key)
       full_key = pluralized_key(full_key, count) unless count.nil?
 
@@ -373,7 +373,7 @@ module I18n
                  end
                end
 
-      return result if !result.nil? || ongoing_fallback
+      return result if !result.nil? || ongoing_fallback || no_raise
 
       default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{full_key}") : default
     end
@@ -382,7 +382,7 @@ module I18n
       translations.each do |key, data|
         current_path = path.empty? ? key : suffix_key(path, key)
 
-        if data.is_a?(Bool | Int32 | String)
+        if data.is_a?(Bool | Int32 | Nil | String)
           @translations[current_path] = data
         elsif data.is_a?(Array)
           data.each_with_index do |value, i|
