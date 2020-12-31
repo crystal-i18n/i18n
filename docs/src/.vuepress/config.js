@@ -64,6 +64,13 @@ module.exports = {
             'pluralization_rules',
             'translations_hash_specification',
           ]
+        },
+        {
+          title: 'Project',
+          collapsable: false,
+          children: [
+            'CHANGELOG',
+          ]
         }
       ],
     }
