@@ -58,7 +58,9 @@ module.exports = {
           title: 'Advanced',
           collapsable: false,
           children: [
+            'translation_loaders',
             'translation_catalogs',
+            'fallbacks',
             'pluralization_rules',
             'translations_hash_specification',
           ]
