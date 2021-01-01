@@ -11,7 +11,7 @@ allowing to leverage translations and localized contents in a Crystal project.
 
 ## Documentation
 
-Online browsable documentation is available at https://crystal-i18n.github.io/i18n/.
+Online browsable documentation is available at https://crystal-i18n.github.io/.
 
 ## Installation
 
@@ -60,7 +60,7 @@ I18n.t("simple.interpolation", name: "John Doe") # outputs "Hello, John Doe!"
 I18n.t("simple.pluralization", count: 42)        # outputs "42 items"
 ```
 
-Please head over to the [documentation](https://crystal-i18n.github.io/i18n/) for a more complete overview of the `I18n` 
+Please head over to the [documentation](https://crystal-i18n.github.io/) for a more complete overview of the `I18n` 
 module capabilities (including the configuration options, localization features, etc).
 
 ## Authors
