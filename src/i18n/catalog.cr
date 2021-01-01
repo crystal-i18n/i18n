@@ -156,11 +156,11 @@ module I18n
     # Custom formats can be defined under `i18n.number.formats` in order to use other combinations of delimiters,
     # separators, decimal places, etc.
     def localize(object : Number, format : String | Symbol = :default) : String
-      separator = fetch_translation(locale, "i18n.number.formats.#{format}.separator", no_raise: true)
-      delimiter = fetch_translation(locale, "i18n.number.formats.#{format}.delimiter", no_raise: true)
-      decimal_places = fetch_translation(locale, "i18n.number.formats.#{format}.decimal_places", no_raise: true)
-      group = fetch_translation(locale, "i18n.number.formats.#{format}.group", no_raise: true)
-      only_significant = fetch_translation(locale, "i18n.number.formats.#{format}.only_significant", no_raise: true)
+      separator = fetch_translation(locale, "i18n.number.formats.#{format}.separator")
+      delimiter = fetch_translation(locale, "i18n.number.formats.#{format}.delimiter")
+      decimal_places = fetch_translation(locale, "i18n.number.formats.#{format}.decimal_places")
+      group = fetch_translation(locale, "i18n.number.formats.#{format}.group")
+      only_significant = fetch_translation(locale, "i18n.number.formats.#{format}.only_significant")
 
       object.format(
         separator: separator.as?(String) || '.',
@@ -319,7 +319,7 @@ module I18n
         key = suffix_key(scope.to_s, key)
       end
 
-      entry = fetch_translation(locale, key, count: count, default: default).not_nil!.to_s
+      entry = fetch_translation!(locale, key, count: count, default: default).not_nil!.to_s
 
       entry = interpolate(entry, "count", count) unless count.nil?
 
@@ -360,7 +360,13 @@ module I18n
       self.locale = current_locale || default_locale
     end
 
-    private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false, no_raise = false)
+    private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
+      fetch_translation!(locale, key, count, default, ongoing_fallback)
+    rescue error : Errors::MissingTranslation
+      nil
+    end
+
+    private def fetch_translation!(locale, key, count = nil, default = nil, ongoing_fallback = false)
       full_key = suffix_key(locale, key)
       full_key = pluralized_key(full_key, count) unless count.nil?
 
@@ -373,7 +379,7 @@ module I18n
                  end
                end
 
-      return result if !result.nil? || ongoing_fallback || no_raise
+      return result if !result.nil? || ongoing_fallback
 
       default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{full_key}") : default
     end
