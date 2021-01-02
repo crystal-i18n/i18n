@@ -1,6 +1,6 @@
 # Crystal I18n
 
-![logo](docs/src/.vuepress/public/assets/img/hero.svg)
+![logo](https://github.com/crystal-i18n/i18n/blob/master/docs/src/.vuepress/public/assets/img/hero.svg)
 
 [![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)](https://github.com/crystal-i18n/i18n/actions)
 
@@ -8,6 +8,15 @@
 
 **Crystal I18n** is an internationalization library for the Crystal programming language. It provides a unified interface 
 allowing to leverage translations and localized contents in a Crystal project.
+
+Features:
+
+* Translation lookups
+* Localization
+* Interpolation
+* Pluralization rules
+* Locale fallbacks
+* Flexible configuration
 
 ## Documentation
 
