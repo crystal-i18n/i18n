@@ -1,6 +1,6 @@
 # Crystal I18n
 
-![logo](https://github.com/crystal-i18n/i18n/blob/master/docs/src/.vuepress/public/assets/img/hero.svg)
+![logo](https://raw.githubusercontent.com/crystal-i18n/i18n/master/docs/src/.vuepress/public/assets/img/hero.svg)
 
 [![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)](https://github.com/crystal-i18n/i18n/actions)
 
