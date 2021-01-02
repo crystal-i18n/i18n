@@ -55,6 +55,8 @@ module I18n
   alias TranslationsHashValues = Bool | Int32 | Nil | String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
+  VERSION = "0.1.0"
+
   # Activates a locale for translations.
   #
   # This method allows to set the locale used to produce translated contents. Note that once activated, the current

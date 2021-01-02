@@ -1,8 +1,11 @@
 name: i18n
-version: 0.1.0.dev0
+version: 0.1.0
 
 authors:
   - Morgan Aubert <me@morganaubert.name>
+
+description: |
+  An internationalization library for Crystal.
 
 crystal: 0.35.0
 
