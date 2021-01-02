@@ -28,5 +28,5 @@ jobs:
         with:
           personal_token: ${{ secrets.ACCESS_TOKEN }}
           external_repository: crystal-i18n/crystal-i18n.github.io
-          publish_branch: main
+          publish_branch: gh-pages
           publish_dir: docs/src/.vuepress/dist
