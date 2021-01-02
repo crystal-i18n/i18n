@@ -74,6 +74,14 @@ describe I18n::Config do
     end
   end
 
+  describe "#loaders=" do
+    it "allows to set the array of loader instances" do
+      config = I18n::Config.new
+      config.loaders = [I18n::Loader::YAML.new("config/locales")] of I18n::Loader::Base
+      config.loaders.size.should eq 1
+    end
+  end
+
   describe "#fallbacks" do
     it "returns nil by default" do
       config = I18n::Config.new

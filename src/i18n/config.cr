@@ -23,6 +23,33 @@ module I18n
     # Unless explicitly set, the default value will be `nil`.
     getter fallbacks
 
+    # Returns the array of configured translations loaders.
+    #
+    # Translations loaders will be used to populate the catalog of translations (`I18n::Catalog` object) that is
+    # initialized from this configuration object. Translations loaders are subclasses of `I18n::Loader::Base` and are
+    # used to extract raw translations from files (eg. yaml or json) or other sources.
+    #
+    # By default, an empty array will be returned by this method. Loaders have to be explicitly appended to this array
+    # in order to be used to initialize associated catalog of translations. For example:
+    #
+    # ```
+    # I18n.config.loaders << I18n::Loader::YAML.new("config/locales")
+    # ```
+    getter loaders
+
+    # Allows to set the array of configured translations loaders.
+    #
+    # Translations loaders will be used to populate the catalog of translations (`I18n::Catalog` object) that is
+    # initialized from this configuration object. Translations loaders are subclasses of `I18n::Loader::Base` and are
+    # used to extract raw translations from files (eg. yaml or json) or other sources.
+    #
+    # ```
+    # I18n.config.loaders = [
+    #   I18n::Loader::YAML.new("config/locales")
+    # ] of I18n::Loader::Base
+    # ```
+    setter loaders
+
     def initialize
       @available_locales = nil
       @default_locale = Catalog::DEFAULT_LOCALE
@@ -94,22 +121,6 @@ module I18n
                    else
                      fallbacks
                    end
-    end
-
-    # Returns the list of configured translations loaders.
-    #
-    # Translations loaders will be used to populate the catalog of translations (`I18n::Catalog` object) that is
-    # initialized from this configuration object. Translations loaders are subclasses of `I18n::Loader::Base` and are
-    # used to extract raw translations from files (eg. yaml or json) or other sources.
-    #
-    # By default, an empty array will be returned by this method. Loaders have to be explicitly appended to this array
-    # in order to be used to initialize associated catalog of translations. For example:
-    #
-    # ```
-    # I18n.config.loaders << I18n::Loader::YAML.new("config/locales")
-    # ```
-    def loaders
-      @loaders
     end
   end
 end
