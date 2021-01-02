@@ -1,0 +1,32 @@
+name: Docs
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    container:
+      image: crystallang/crystal:0.35.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Install and Build
+        run: |
+          cd docs
+          npm install
+          cd ..
+          make docs
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          external_repository: crystal-i18n/crystal-i18n.github.io
+          publish_branch: main
+          publish_dir: docs/src/.vuepress/dist
