@@ -36,7 +36,7 @@ formats, only the `default` one is really mandatory since this is the one that i
 explicitly provided to the `#localize` method. 
 
 The directives used in the above formats are all defined in the 
-[`Time::Format`](https://crystal-lang.org/api/Time/Format.html) struct. As such custom formats can be created from
+[`Time::Format`](https://crystal-lang.org/api/Time/Format.html) struct. As such, custom formats can be created from
 any of the directives provided by [`Time::Format`](https://crystal-lang.org/api/Time/Format.html), for example 
 `%Y-%m-%d %H:%M:%S %z` is a valid format. Some of these directives (eg. month names) are translated too and thus
 additional translation keys have to be defined for those too ; here is a list of the translation keys that need to be

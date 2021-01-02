@@ -16,7 +16,7 @@ Unless explicitly set, the default locale (`en` if not configured in `I18n.confi
 
 When activating a locale with `#locale=` or `#activate`, all further translations or localizations will be done
 using the specified locale. If the specified locale is not part of the available locales (either because it was not part
-of the loaded translations or because it was not part of the `I18n.config.available_locales` array), a 
+of the loaded translations or because it was not part of the `I18n.config.available_locales` array), an 
 `I18n::Errors::InvalidLocale` exception is raised.
 
 Crystal I18n also provides the ability to execute a block with a specific locale activated. In order to do so, the
