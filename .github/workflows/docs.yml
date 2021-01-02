@@ -1,11 +1,11 @@
-name: Docs
+name: DOCS
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  docs:
+  build-and-deploy:
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal:0.35.1
