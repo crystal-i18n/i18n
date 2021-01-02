@@ -3,6 +3,7 @@
 ![logo](https://raw.githubusercontent.com/crystal-i18n/i18n/master/docs/src/.vuepress/public/assets/img/hero.svg)
 
 [![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)](https://github.com/crystal-i18n/i18n/actions)
+[![License](https://img.shields.io/github/license/crystal-i18n/i18n)](https://github.com/crystal-i18n/i18n/blob/master/LICENSE)
 
 ---
 
