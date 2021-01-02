@@ -45,7 +45,7 @@ module I18n
     #
     # ```
     # I18n.config.loaders = [
-    #   I18n::Loader::YAML.new("config/locales")
+    #   I18n::Loader::YAML.new("config/locales"),
     # ] of I18n::Loader::Base
     # ```
     setter loaders
