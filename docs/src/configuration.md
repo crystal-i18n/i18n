@@ -25,9 +25,9 @@ built-in support for two loader types:
 * <a href="/ref/I18n/Loader/JSON.html" target="_blank"><code>I18n::Loader::JSON</code></a> - allows to load JSON
   translations files
 
-Each of the above loader implementation supports translations files organized accross multiple files (eg. multiple
-YAML files organized in sub-directories for a specific locale). The above loaders are initialized from an absolute or 
-relative directory path (where translations files will be looked up).
+Each of the above loader implementation supports translations organized accross multiple files (eg. multiple YAML files 
+organized in sub-directories for a specific locale). The above loaders are initialized from an absolute or relative 
+directory path (where translations files will be looked up).
 
 It's also possible to fully define the existing loaders at once through the use of the <a href="/ref/I18n/Config.html#loaders=(loaders)-instance-method" target="_blank"><code>I18n::Config#loaders=</code></a>
 method:
