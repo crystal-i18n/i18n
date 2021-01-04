@@ -29,7 +29,7 @@ could be possible to write translation loaders to load translations from a datab
 
 To do so, it is necessary to subclass the `I18n::Loader::Base` abstract class and tp provide a `#load` method that 
 returns a valid [translation hash](./translations_hash_specification)
-(<a href="/ref/I18n/TranslationsHash.html" target="_blank"><code>I18n::TranslationHash</code></a>):
+(<a href="/ref/I18n/TranslationsHash.html" target="_blank"><code>I18n::TranslationsHash</code></a>):
 
 ```crystal
 class MyLoader < I18n::Loader::Base
