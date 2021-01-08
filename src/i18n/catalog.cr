@@ -30,9 +30,7 @@ module I18n
         fallbacks: config.fallbacks
       )
 
-      config.loaders.each do |loader|
-        catalog.inject(loader)
-      end
+      catalog.inject(config.translations_data)
 
       catalog
     end
@@ -70,7 +68,7 @@ module I18n
     end
 
     # Injects the hash of translations returned by a specific loader.
-    def inject(loader : Loader::Base)
+    def inject(loader : Loader::Base) : Nil
       inject(loader.load)
     end
 

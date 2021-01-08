@@ -57,6 +57,8 @@ module I18n
 
   VERSION = "0.1.0"
 
+  @@config : Config?
+
   # Activates a locale for translations.
   #
   # This method allows to set the locale used to produce translated contents. Note that once activated, the current
@@ -80,11 +82,7 @@ module I18n
   #
   # This methods return the main `I18n::Config` object used by the `I18n` module to persist configuration options.
   def self.config : Config
-    if (config = Fiber.current.i18n_config).nil?
-      Fiber.current.i18n_config = I18n::Config.new
-    else
-      config
-    end
+    @@config ||= Config.new
   end
 
   # Allows to replace the main configuration object.
@@ -93,7 +91,7 @@ module I18n
   # catalog of translation. Calling `#init` once the new `I18n::Config` object has been assigned might be necessary in
   # order to ensure that the main catalog of translations used by the `I18n` module is reinitialized.
   def self.config=(config : Config) : Config
-    Fiber.current.i18n_config = config
+    @@config = config
   end
 
   # Initializes the `I18n` module.
@@ -103,6 +101,7 @@ module I18n
   # the main catalog of translations. Calling this will ensure that the translations files that were defined using
   # `I18n::Config#loaders` are read and processed in order to allow further translations lookups.
   def self.init : Nil
+    config.reset_translations_data
     Fiber.current.i18n_catalog = Catalog.from_config(config)
   end
 

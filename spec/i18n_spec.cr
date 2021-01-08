@@ -70,18 +70,6 @@ describe I18n do
       I18n.config = new_config
       I18n.config.should eq new_config
     end
-
-    it "is scoped to the current fiber" do
-      config = I18n::Config.new
-
-      spawn do
-        I18n.config = config
-      end
-
-      sleep 1.second
-
-      I18n.config.should_not eq config
-    end
   end
 
   describe "#init" do

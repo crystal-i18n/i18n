@@ -7,6 +7,7 @@ module I18n
   class Config
     @available_locales : Array(String) | Nil
     @fallbacks : Locale::Fallbacks | Nil
+    @translations_data : TranslationsHash | Nil
 
     # Returns the available locales.
     #
@@ -121,6 +122,23 @@ module I18n
                    else
                      fallbacks
                    end
+    end
+
+    protected def reset_translations_data : Nil
+      @translations_data = nil
+    end
+
+    protected def translations_data : TranslationsHash
+      @translations_data ||= begin
+        tr_hash = TranslationsHash.new
+        loaders.each do |loader|
+          effective_translations = loader.load.select do |locale, _|
+            available_locales.nil? || available_locales.not_nil!.empty? || available_locales.not_nil!.includes?(locale)
+          end
+          tr_hash.merge!(effective_translations)
+        end
+        tr_hash
+      end
     end
   end
 end
