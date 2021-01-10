@@ -218,6 +218,14 @@ describe I18n do
       I18n.locale.should eq "en"
     end
 
+    it "returns a translation" do
+      I18n.locale.should eq "en"
+
+      (I18n.with_locale("fr") { I18n.t("simple.interpolation", name: "John") }).should eq "Bonjour, John!"
+
+      I18n.locale.should eq "en"
+    end
+
     it "raises if the locale is not part of the available locales" do
       expect_raises(I18n::Errors::InvalidLocale, "xy is not a valid locale") do
         I18n.with_locale("xy") do

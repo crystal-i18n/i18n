@@ -249,8 +249,8 @@ module I18n
   #
   # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in
   # (ie. if no translations were defined for this locale).
-  def self.with_locale(locale : String | Symbol, &block) : Nil
-    catalog.with_locale(locale, &block)
+  def self.with_locale(locale : String | Symbol)
+    catalog.with_locale(locale) { yield }
   end
 
   private def self.catalog
