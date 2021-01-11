@@ -55,7 +55,7 @@ module I18n
   alias TranslationsHashValues = Bool | Int32 | Nil | String | Array(String) | Hash(String, TranslationsHashValues)
   alias TranslationsHash = Hash(String, TranslationsHashValues)
 
-  VERSION = "0.1.1"
+  VERSION = "0.1.2"
 
   @@config : Config?
 
