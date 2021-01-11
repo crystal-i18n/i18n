@@ -4,6 +4,10 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.1.3 (2021-01-11)
+
+* Bump Crystal version in shard definition
+
 ## 0.1.2 (2021-01-10)
 
 * Fix `I18n#with_locale` and `I18n::Catalog#with_locale` to ensure the value returned by the inner block is properly
