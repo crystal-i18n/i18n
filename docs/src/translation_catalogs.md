@@ -29,11 +29,9 @@ Once initialized it is possible to inject translations into translation catalogs
 loader = I18n::Loader::YAML.new("config/locales")
 catalog.inject(loader)
 catalog.inject(I18n::TranslationsHash{
-  "en" => {
-    "simple" => {
-      "translation" => "This is a translation"
-    }
-  }
+  "en" => I18n::TranslationsHash{
+    "simple" => "This is a translation",
+  },
 })
 ```
 
@@ -42,7 +40,7 @@ lookups and activations. The methods to use are the same as the ones provided by
 
 ```crystal
 catalog.with_locale(:en) do
-  catalog.t("simple.translation")
+  catalog.t("simple")
   catalog.l(Time.local)
 end
 ```
