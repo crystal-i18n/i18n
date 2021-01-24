@@ -4,6 +4,10 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.1.4 (2021-01-24)
+
+* Fix possible missing translations errors when using loaders making use of the same namespaces
+
 ## 0.1.3 (2021-01-11)
 
 * Bump Crystal version in shard definition
