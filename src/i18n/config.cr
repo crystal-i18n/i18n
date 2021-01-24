@@ -135,10 +135,29 @@ module I18n
           effective_translations = loader.load.select do |locale, _|
             available_locales.nil? || available_locales.not_nil!.empty? || available_locales.not_nil!.includes?(locale)
           end
-          tr_hash.merge!(effective_translations)
+          deep_merge_translations_hash(tr_hash, effective_translations)
         end
         tr_hash
       end
+    end
+
+    private def deep_merge_translations_hash(target, translations_hash)
+      translations_hash.keys.each do |key|
+        if !target[key]?
+          target[key] = translations_hash[key]
+          next
+        end
+
+        target_value = target[key]
+        translations_hash_value = translations_hash[key]
+        target[key] = if target_value.is_a?(Hash) && translations_hash_value.is_a?(Hash)
+                        deep_merge_translations_hash(target_value, translations_hash_value)
+                      else
+                        translations_hash[key]
+                      end
+      end
+
+      target
     end
   end
 end

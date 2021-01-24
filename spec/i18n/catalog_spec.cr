@@ -39,6 +39,23 @@ describe I18n::Catalog do
         catalog.translate!("simple.translation").should eq "This is a simple translation"
       end
     end
+
+    it "is able to initialize a catalog from a config object containing loaders making use of the same namespaces" do
+      config = I18n::Config.new
+      config.loaders << I18n::Loader::YAML.new("#{__DIR__}/catalog_spec/dir01")
+      config.loaders << I18n::Loader::YAML.new("#{__DIR__}/catalog_spec/dir02")
+
+      catalog = I18n::Catalog.from_config(config)
+
+      catalog.translate!("message1").should eq "Message 1"
+      catalog.translate!("message2").should eq "Message 2"
+
+      catalog.translate!("simple.translation1").should eq "Simple translation 1"
+      catalog.translate!("simple.translation2").should eq "Simple translation 2"
+
+      catalog.translate!("custom1.message").should eq "Custom message 1"
+      catalog.translate!("custom2.message").should eq "Custom message 2"
+    end
   end
 
   describe "#activate" do
