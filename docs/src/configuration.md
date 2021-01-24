@@ -36,6 +36,13 @@ method:
 I18n.config.loaders = [I18n::Loader::YAML.new("config/locales")] of I18n::Loader::Base
 ```
 
+::: warning
+The order of `#loaders` is important, especially if the same translations are defined in multiple places accross files
+that are targetted by multiple loaders. For example in a situation where a `simple.translation` translation is defined 
+by a file that is loaded by a loader **L1** while the same translation is also defined by a file that is loaded by a 
+loader **L2**, the second translation will be used if **L1** comes first in the `#loaders` array.
+:::
+
 ## `default_locale`
 
 **Default value:** `"en"`
