@@ -4,3 +4,5 @@ en:
     translation1: "Simple translation 1"
   custom1:
     message: "Custom message 1"
+  overriden:
+    message: "Am I overriden?"

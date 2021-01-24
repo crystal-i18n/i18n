@@ -55,6 +55,8 @@ describe I18n::Catalog do
 
       catalog.translate!("custom1.message").should eq "Custom message 1"
       catalog.translate!("custom2.message").should eq "Custom message 2"
+
+      catalog.translate!("overriden.message").should eq "I am overriden"
     end
   end
 
