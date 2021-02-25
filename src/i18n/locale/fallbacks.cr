@@ -57,7 +57,7 @@ module I18n
         end
 
         fallbacks += @default
-        fallbacks.compact.uniq
+        fallbacks.compact.uniq!
       end
     end
   end
