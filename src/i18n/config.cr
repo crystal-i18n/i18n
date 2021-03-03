@@ -7,6 +7,7 @@ module I18n
   class Config
     @available_locales : Array(String) | Nil
     @fallbacks : Locale::Fallbacks | Nil
+    @normalized_translations : Catalog::NormalizedHash | Nil
     @translations_data : TranslationsHash | Nil
 
     # Returns the available locales.
@@ -124,8 +125,17 @@ module I18n
                    end
     end
 
+    protected def normalized_translations : Catalog::NormalizedHash
+      @normalized_translations ||= begin
+        normalized_translations = Catalog::NormalizedHash.new
+        Catalog.normalize_hash(translations_data, normalized_translations)
+        normalized_translations
+      end
+    end
+
     protected def reset_translations_data : Nil
       @translations_data = nil
+      @normalized_translations = nil
     end
 
     protected def translations_data : TranslationsHash

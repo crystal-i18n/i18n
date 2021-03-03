@@ -4,6 +4,9 @@ module I18n
   # Catalogs of translations hold all the translations for multiple locales and provide the ability to activate specific
   # locales in order to define in which locales the translated strings should be returned.
   class Catalog
+    # :nodoc:
+    alias NormalizedHash = Hash(String, Bool | Int32 | Nil | String)
+
     # The default locale that is considered when no other locales are configured nor activated.
     DEFAULT_LOCALE = "en"
 
@@ -30,7 +33,7 @@ module I18n
         fallbacks: config.fallbacks
       )
 
-      catalog.inject(config.translations_data)
+      catalog.inject_normalized(config.translations_data, config.normalized_translations)
 
       catalog
     end
@@ -43,7 +46,7 @@ module I18n
       @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
       @available_locales = @available_locales_restricted_to.dup
       @locale = nil
-      @translations = {} of String => Bool | Int32 | Nil | String
+      @translations = NormalizedHash.new
     end
 
     # Activates a locale for translations.
@@ -87,7 +90,7 @@ module I18n
         @available_locales_restricted_to.empty? || @available_locales_restricted_to.includes?(locale)
       end
 
-      inject_and_normalize(effective_translations)
+      self.class.normalize_hash(effective_translations, @translations)
 
       translations.keys.each do |locale|
         @available_locales << locale if !@available_locales.includes?(locale)
@@ -358,6 +361,40 @@ module I18n
       self.locale = current_locale || default_locale
     end
 
+    protected def self.normalize_hash(
+      translations : TranslationsHash,
+      normalized : NormalizedHash,
+      path : String = ""
+    )
+      translations.each do |key, data|
+        current_path = path.empty? ? key : suffix_key(path, key)
+
+        if data.is_a?(Bool | Int32 | Nil | String)
+          normalized[current_path] = data
+        elsif data.is_a?(Array)
+          data.each_with_index do |value, i|
+            normalized[suffix_key(current_path, i)] = value
+          end
+        else
+          normalize_hash(data, normalized, current_path)
+        end
+      end
+
+      normalized
+    end
+
+    protected def self.suffix_key(key, suffix)
+      "#{key}.#{suffix}"
+    end
+
+    protected def inject_normalized(data : TranslationsHash, normalized : NormalizedHash)
+      @translations = normalized
+
+      data.keys.each do |locale|
+        @available_locales << locale if !@available_locales.includes?(locale)
+      end
+    end
+
     private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
       fetch_translation!(locale, key, count, default, ongoing_fallback)
     rescue error : Errors::MissingTranslation
@@ -380,22 +417,6 @@ module I18n
       return result if !result.nil? || ongoing_fallback
 
       default.nil? ? raise Errors::MissingTranslation.new("missing translation: #{full_key}") : default
-    end
-
-    private def inject_and_normalize(translations : TranslationsHash, path : String = "")
-      translations.each do |key, data|
-        current_path = path.empty? ? key : suffix_key(path, key)
-
-        if data.is_a?(Bool | Int32 | Nil | String)
-          @translations[current_path] = data
-        elsif data.is_a?(Array)
-          data.each_with_index do |value, i|
-            @translations[suffix_key(current_path, i)] = value
-          end
-        else
-          inject_and_normalize(data, current_path)
-        end
-      end
     end
 
     private def interpolate(translation, variable_name, value)
@@ -423,7 +444,7 @@ module I18n
     end
 
     private def suffix_key(key, suffix)
-      "#{key}.#{suffix}"
+      self.class.suffix_key(key, suffix)
     end
   end
 end
