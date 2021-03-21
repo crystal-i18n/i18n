@@ -4,6 +4,12 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.1.5 (2021-03-21)
+
+* Ensure that catalogs of translations that are initialized from configuration objects leverage normalized translations
+  hashes
+* Add an "Advanced" section to the documentation
+
 ## 0.1.4 (2021-01-24)
 
 * Fix possible missing translations errors when using loaders making use of the same namespaces

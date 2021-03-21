@@ -52,7 +52,7 @@ require "./i18n/**"
 # ```
 #
 module I18n
-  VERSION = "0.1.4"
+  VERSION = "0.1.5"
 
   @@config : Config?
 
