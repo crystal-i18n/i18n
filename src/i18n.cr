@@ -52,9 +52,6 @@ require "./i18n/**"
 # ```
 #
 module I18n
-  alias TranslationsHashValues = Bool | Int32 | Nil | String | Array(String) | Hash(String, TranslationsHashValues)
-  alias TranslationsHash = Hash(String, TranslationsHashValues)
-
   VERSION = "0.1.4"
 
   @@config : Config?
