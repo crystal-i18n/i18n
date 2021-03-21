@@ -28,8 +28,7 @@ It is possible to write new translation files in order to load translations from
 could be possible to write translation loaders to load translations from a database, XML files, etc.
 
 To do so, it is necessary to subclass the `I18n::Loader::Base` abstract class and to provide a `#load` method that 
-returns a valid [translation hash](./translations_hash_specification)
-(<a href="/ref/I18n/TranslationsHash.html" target="_blank"><code>I18n::TranslationsHash</code></a>):
+returns a valid <a href="/ref/I18n/TranslationsHash.html" target="_blank">translation hash</a>:
 
 ```crystal
 class MyLoader < I18n::Loader::Base

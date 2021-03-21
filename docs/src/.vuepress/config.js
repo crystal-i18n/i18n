@@ -54,17 +54,15 @@ module.exports = {
             'configuration',
           ]
         },
-        //{
-        //  title: 'Advanced',
-        //  collapsable: false,
-        //  children: [
-        //    'translation_loaders',
-        //    'translation_catalogs',
-        //    'fallbacks',
-        //    'pluralization_rules',
-        //    'translations_hash_specification',
-        //  ]
-        //},
+        {
+          title: 'Advanced',
+          collapsable: false,
+          children: [
+            'translation_loaders',
+            'translation_catalogs',
+            'pluralization_rules',
+          ]
+        },
         {
           title: 'Project',
           collapsable: false,

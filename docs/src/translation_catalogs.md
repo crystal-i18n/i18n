@@ -23,7 +23,7 @@ catalog = I18n::Catalog.new(
 ```
 
 Once initialized it is possible to inject translations into translation catalogs through the use of the `#inject` method
-(which accepts a loader instance or a [translation hash](./translations_hash_specification)):
+(which accepts a loader instance or a <a href="/ref/I18n/TranslationsHash.html" target="_blank">translation hash</a>):
 
 ```crystal
 loader = I18n::Loader::YAML.new("config/locales")

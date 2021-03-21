@@ -1,3 +1,0 @@
-# Translations hash specification
-
-TODO.
