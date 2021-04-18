@@ -1,9 +1,9 @@
 # Crystal I18n
 
-![logo](https://raw.githubusercontent.com/crystal-i18n/i18n/master/docs/src/.vuepress/public/assets/img/hero.svg)
+![logo](https://raw.githubusercontent.com/crystal-i18n/i18n/main/docs/src/.vuepress/public/assets/img/hero.svg)
 
 [![Version](https://img.shields.io/github/v/tag/crystal-i18n/i18n)](https://github.com/crystal-i18n/i18n/tags)
-[![License](https://img.shields.io/github/license/crystal-i18n/i18n)](https://github.com/crystal-i18n/i18n/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/crystal-i18n/i18n)](https://github.com/crystal-i18n/i18n/blob/main/LICENSE)
 [![CI](https://github.com/crystal-i18n/i18n/workflows/CI/badge.svg)](https://github.com/crystal-i18n/i18n/actions)
 
 ---
