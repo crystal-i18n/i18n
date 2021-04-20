@@ -1,17 +1,32 @@
 module I18n
   module Loader
+    # The YAML translations loader.
+    #
+    # This loader implementation allows to load translations from YAML files (`.yaml` or `.yml` files). It must be
+    # initialized from a given path and it will recursively try to load all the YAML files that are available under the
+    # targetted directory:
+    #
+    # ```
+    # I18n.config.loaders << I18n::Loader::YAML.new("config/locales")
+    # ```
+    #
+    # This loader also allows to embed the raw translations that are available under the targetted directory inside the
+    # compiled binary through the use of the `#embed` macro:
+    #
+    # ```
+    # I18n.config.loaders << I18n::Loader::YAML.embed("config/locales")
+    # ```
     class YAML < Base
-      def initialize(@path : String)
-      end
+      @path : String? = nil
+      @preloaded_translations : TranslationsHash? = nil
 
-      def load : TranslationsHash
-        raw_translations = [] of String
+      getter path
+      getter preloaded_translations
 
-        Dir.glob(@path + "/**/*.yml", @path + "/**/*.yaml") do |filename|
-          raw_translations << File.read(filename)
-        end
-
+      # Converts an array of YAML strings to a valid translations hash.
+      def self.normalize_raw_translations(raw_translations : Array(String))
         translations_data = TranslationsHash.new
+
         raw_translations.each do |data|
           ::YAML.parse(data).as_h.each do |locale, locale_data|
             translations_data[locale.as_s] ||= TranslationsHash.new
@@ -22,7 +37,29 @@ module I18n
         translations_data
       end
 
-      private def parsed_data_to_translations_hash(data)
+      def initialize(@path : String)
+      end
+
+      def initialize(@preloaded_translations : TranslationsHash)
+      end
+
+      macro embed(path)
+        {{ run("./yaml/embed", path) }}
+      end
+
+      def load : TranslationsHash
+        return @preloaded_translations.not_nil! unless @preloaded_translations.nil?
+
+        raw_translations = [] of String
+
+        Dir.glob(@path.not_nil! + "/**/*.yml", @path.not_nil! + "/**/*.yaml") do |filename|
+          raw_translations << File.read(filename)
+        end
+
+        self.class.normalize_raw_translations(raw_translations)
+      end
+
+      private def self.parsed_data_to_translations_hash(data)
         translations = TranslationsHash.new
 
         data.as_h.each do |k, v|

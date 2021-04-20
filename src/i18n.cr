@@ -1,7 +1,15 @@
 require "json"
 require "yaml"
 
-require "./i18n/**"
+require "./i18n/catalog"
+require "./i18n/config"
+require "./i18n/errors"
+require "./i18n/ext/**"
+require "./i18n/loader/*"
+require "./i18n/locale/**"
+require "./i18n/pluralization"
+require "./i18n/pluralization/**"
+require "./i18n/translation_hash"
 
 # The I18n module provides a simple interface for internationalization and localization.
 #

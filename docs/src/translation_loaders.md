@@ -22,6 +22,20 @@ Each of the above loader implementation supports translations files organized ac
 YAML files organized in sub-directories for a specific locale). The above loaders can be initialized from an absolute or 
 relative directory path (where translations files will be looked up).
 
+Most frequently, built-in translations loaders will be used to define translations that are loaded at runtime. This is
+achieved by initializing the loader objects as follows:
+
+```crystal
+I18n.config.loaders << I18n::Loader::YAML.new("config/locales")
+```
+
+In order to ensure that raw translations are embedded inside the compiled binary, it is possible to use the 
+`#embed` method:
+
+```crystal
+I18n.config.loaders << I18n::Loader::YAML.embed("config/locales")
+```
+
 ## Custom translation loaders
 
 It is possible to write new translation files in order to load translations from other data sources. For example it 
