@@ -60,7 +60,7 @@ require "./i18n/translation_hash"
 # ```
 #
 module I18n
-  VERSION = "0.1.5"
+  VERSION = "0.2.0"
 
   @@config : Config?
 

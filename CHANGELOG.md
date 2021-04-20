@@ -4,6 +4,11 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.2.0 (2021-04-19)
+
+* Add supported for embeddable translations. Embeddable translations provide the ability to embed raw translations 
+  inside compiled binaries so that translations files are no longer loaded at runtime
+
 ## 0.1.5 (2021-03-21)
 
 * Ensure that catalogs of translations that are initialized from configuration objects leverage normalized translations
