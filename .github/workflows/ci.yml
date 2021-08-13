@@ -20,9 +20,16 @@ jobs:
       - name: QA checks
         run: make qa
   specs:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal:
+          - latest
+          - nightly
+          - 1.1.1
     runs-on: ubuntu-latest
     container:
-      image: crystallang/crystal:1.1.1
+      image: crystallang/crystal:${{ matrix.crystal }}
     steps:
     - uses: actions/checkout@v2
     - name: Install shards
