@@ -29,5 +29,5 @@ Once implemented, custom pluralization rules have to be "registered" to Crystal 
 I18n::Pluralization.register_rule(:en, EnglishRule)
 ```
 
-Then, every time pluralized translations need to be generated for the `en` locale, the registerd pluralization rule will
-be used automatically by Crystal I18n.
+Then, every time pluralized translations need to be generated for the `en` locale, the registered pluralization rule 
+will be used automatically by Crystal I18n.
