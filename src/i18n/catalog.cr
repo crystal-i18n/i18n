@@ -369,13 +369,14 @@ module I18n
       translations.each do |key, data|
         current_path = path.empty? ? key : suffix_key(path, key)
 
-        if data.is_a?(Bool | Int32 | Nil | String)
+        case data
+        in Bool, Int32, Nil, String
           normalized[current_path] = data
-        elsif data.is_a?(Array)
+        in Array(String)
           data.each_with_index do |value, i|
             normalized[suffix_key(current_path, i)] = value
           end
-        else
+        in TranslationsHash, Hash(String, Hash(String, String)), Hash(String, String)
           normalize_hash(data, normalized, current_path)
         end
       end
