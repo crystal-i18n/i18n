@@ -4,6 +4,10 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.2.1 (2021-10-24)
+
+* Add support for Crystal 1.2.1
+
 ## 0.2.0 (2021-04-19)
 
 * Add supported for embeddable translations. Embeddable translations provide the ability to embed raw translations 
