@@ -33,6 +33,9 @@ Lint/LiteralInCondition:
 Lint/LiteralInInterpolation:
   Enabled: true
 
+Lint/NotNil:
+  Enabled: false
+
 Lint/PercentArrays:
   Enabled: true
   StringArrayUnwantedSymbols: ',"'
