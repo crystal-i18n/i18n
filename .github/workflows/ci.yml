@@ -12,7 +12,7 @@ jobs:
   qa:
     runs-on: ubuntu-latest
     container:
-      image: crystallang/crystal:1.6.2
+      image: crystallang/crystal:1.7.0
     steps:
       - uses: actions/checkout@v1
       - name: Install shards
@@ -27,6 +27,7 @@ jobs:
           - latest
           - nightly
           - 1.6.2
+          - 1.7.0
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal:${{ matrix.crystal }}
