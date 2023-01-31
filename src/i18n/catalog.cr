@@ -353,7 +353,7 @@ module I18n
     #
     # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in
     # the catalog (ie. if no translations was injected into this catalog for the considered locale).
-    def with_locale(locale : String | Symbol)
+    def with_locale(locale : String | Symbol, &)
       current_locale = @locale
       self.locale = locale
       yield
