@@ -291,8 +291,8 @@ module I18n
       **kwargs
     ) : String
       translate!(key, params, count, scope, default, **kwargs)
-    rescue error : Errors::MissingTranslation
-      error.message.to_s
+    rescue ex : Errors::MissingTranslation
+      ex.message.to_s
     end
 
     # Performs a translation lookup.
@@ -398,7 +398,7 @@ module I18n
 
     private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
       fetch_translation!(locale, key, count, default, ongoing_fallback)
-    rescue error : Errors::MissingTranslation
+    rescue ex : Errors::MissingTranslation
       nil
     end
 
