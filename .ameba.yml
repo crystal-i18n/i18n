@@ -71,6 +71,9 @@ Lint/UselessConditionInWhen:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
+Naming/BlockParameterName:
+  Enabled: false
+
 Performance/AnyAfterFilter:
   Enabled: true
 
