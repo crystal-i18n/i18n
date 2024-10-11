@@ -26,9 +26,9 @@ jobs:
         crystal:
           - latest
           - nightly
-          - 1.11.2
           - 1.12.2
           - 1.13.0
+          - 1.14.0
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal:${{ matrix.crystal }}
