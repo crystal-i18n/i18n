@@ -10,7 +10,7 @@ end
 puts <<-LOADER
 I18n::Loader::YAML.new(
   I18n::Loader::YAML.normalize_raw_translations(
-    #{raw_translations.inspect}
+    #{raw_translations.inspect} of String
   )
 )
 LOADER

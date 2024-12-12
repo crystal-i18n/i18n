@@ -45,6 +45,15 @@ describe I18n::Loader::YAML do
       loader.preloaded_translations.should eq expected_translations
       loader.load.should eq expected_translations
     end
+
+    it "works as expected for non-existing folders" do
+      loader = I18n::Loader::YAML.embed("spec/i18n/loader/locales/yaml/non-existing")
+
+      loader.should be_a I18n::Loader::YAML
+      loader.path.should be_nil
+      loader.preloaded_translations.try(&.empty?).should be_true
+      loader.load.should be_empty
+    end
   end
 
   describe "#load" do
