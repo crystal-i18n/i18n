@@ -4,6 +4,10 @@ sidebarDepth: 0
 
 # Changelog
 
+## 0.2.2 (UNDER DEVELOPMENT)
+
+* Fix embedded translations error happening when non-existing folders are specified
+
 ## 0.2.1 (2021-10-24)
 
 * Add support for Crystal 1.2.1
