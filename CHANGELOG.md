@@ -4,7 +4,7 @@ sidebarDepth: 0
 
 # Changelog
 
-## 0.2.2 (UNDER DEVELOPMENT)
+## 0.2.2 (2024-12-14)
 
 * Fix embedded translations error happening when non-existing folders are specified
 
