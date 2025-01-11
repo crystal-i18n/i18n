@@ -113,7 +113,7 @@ module I18n
                   Hash(String | Symbol, Array(String | Symbol) | String | Symbol) |
                   Locale::Fallbacks |
                   NamedTuple |
-                  Nil
+                  Nil,
     )
       @fallbacks = case fallbacks
                    when Array

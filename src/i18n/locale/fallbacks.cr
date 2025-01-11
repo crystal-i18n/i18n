@@ -21,7 +21,7 @@ module I18n
 
       def initialize(
         mapping : Hash(String | Symbol, Array(String | Symbol) | String | Symbol) | NamedTuple | Nil = nil,
-        default : Array(String | Symbol) | Nil = nil
+        default : Array(String | Symbol) | Nil = nil,
       )
         @mapping = Hash(String, Array(String)).new
         if !mapping.nil?

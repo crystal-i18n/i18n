@@ -119,7 +119,7 @@ module I18n
   def self.l(
     object : Time | Tuple(Int32, Int32, Int32),
     format : String | Symbol = :default,
-    **kwargs
+    **kwargs,
   ) : String
     localize(object, format, **kwargs)
   end
@@ -165,7 +165,7 @@ module I18n
   def self.localize(
     object : Time | Tuple(Int32, Int32, Int32),
     format : String | Symbol = :default,
-    **kwargs
+    **kwargs,
   ) : String
     catalog.localize(object, format, **kwargs)
   end
@@ -177,7 +177,7 @@ module I18n
     count : Float | Int | Nil = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
-    **kwargs
+    **kwargs,
   ) : String
     translate(key, params, count, scope, default, **kwargs)
   end
@@ -189,7 +189,7 @@ module I18n
     count : Float | Int | Nil = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
-    **kwargs
+    **kwargs,
   ) : String
     translate!(key, params, count, scope, default, **kwargs)
   end
@@ -211,7 +211,7 @@ module I18n
     count : Float | Int | Nil = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
-    **kwargs
+    **kwargs,
   ) : String
     catalog.translate(key, params, count, scope, default, **kwargs)
   end
@@ -233,7 +233,7 @@ module I18n
     count : Float | Int | Nil = nil,
     scope : Array(String | Symbol) | String | Symbol | Nil = nil,
     default = nil,
-    **kwargs
+    **kwargs,
   ) : String
     catalog.translate!(key, params, count, scope, default, **kwargs)
   end

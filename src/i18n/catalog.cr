@@ -41,7 +41,7 @@ module I18n
     def initialize(
       @default_locale : String = DEFAULT_LOCALE,
       available_locales : Array(String) | Nil = nil,
-      @fallbacks : Locale::Fallbacks | Nil = nil
+      @fallbacks : Locale::Fallbacks | Nil = nil,
     )
       @available_locales_restricted_to = available_locales.nil? ? [] of String : available_locales.not_nil!
       @available_locales = @available_locales_restricted_to.dup
@@ -106,7 +106,7 @@ module I18n
     def l(
       object : Time | Tuple(Int32, Int32, Int32),
       format : String | Symbol = :default,
-      **kwargs
+      **kwargs,
     ) : String
       localize(object, format, **kwargs)
     end
@@ -218,7 +218,7 @@ module I18n
     def localize(
       object : Time | Tuple(Int32, Int32, Int32),
       format : String | Symbol = :default,
-      **kwargs
+      **kwargs,
     ) : String
       type = object.is_a?(Time) ? "time" : "date"
       format = begin
@@ -254,7 +254,7 @@ module I18n
       count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
-      **kwargs
+      **kwargs,
     ) : String
       translate(key, params, count, scope, default, **kwargs)
     end
@@ -266,7 +266,7 @@ module I18n
       count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
-      **kwargs
+      **kwargs,
     ) : String
       translate!(key, params, count, scope, default, **kwargs)
     end
@@ -288,7 +288,7 @@ module I18n
       count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
-      **kwargs
+      **kwargs,
     ) : String
       translate!(key, params, count, scope, default, **kwargs)
     rescue ex : Errors::MissingTranslation
@@ -312,7 +312,7 @@ module I18n
       count : Float | Int | Nil = nil,
       scope : Array(String | Symbol) | String | Symbol | Nil = nil,
       default = nil,
-      **kwargs
+      **kwargs,
     ) : String
       if scope.is_a?(Array)
         key = scope.reverse.reduce(key) { |k, part| suffix_key(part.to_s, k) }
@@ -364,7 +364,7 @@ module I18n
     protected def self.normalize_hash(
       translations : TranslationsHash,
       normalized : NormalizedHash,
-      path : String = ""
+      path : String = "",
     )
       translations.each do |key, data|
         current_path = path.empty? ? key : suffix_key(path, key)
