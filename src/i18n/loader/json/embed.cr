@@ -8,9 +8,9 @@ Dir.glob(path + "/**/*.json") do |filename|
 end
 
 puts <<-LOADER
-I18n::Loader::JSON.new(
-  I18n::Loader::JSON.normalize_raw_translations(
-    #{raw_translations.inspect} of String
+  I18n::Loader::JSON.new(
+    I18n::Loader::JSON.normalize_raw_translations(
+      #{raw_translations.inspect} of String
+    )
   )
-)
-LOADER
+  LOADER

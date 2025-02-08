@@ -8,9 +8,9 @@ Dir.glob(path + "/**/*.yml", path + "/**/*.yaml") do |filename|
 end
 
 puts <<-LOADER
-I18n::Loader::YAML.new(
-  I18n::Loader::YAML.normalize_raw_translations(
-    #{raw_translations.inspect} of String
+  I18n::Loader::YAML.new(
+    I18n::Loader::YAML.normalize_raw_translations(
+      #{raw_translations.inspect} of String
+    )
   )
-)
-LOADER
+  LOADER
