@@ -29,7 +29,7 @@ docs:
 qa: qa_crystal typos
 
 .PHONY: qa_crystal
-## Trigger all quality assurance checks.
+## Trigger Crystal quality assurance checks.
 qa_crystal: format_checks lint
 
 .PHONY: format
