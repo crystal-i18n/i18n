@@ -1,0 +1,34 @@
+name: QA
+
+on:
+  push:
+    branches:
+      - "*"
+      - "*/*"
+  pull_request:
+    branches:
+      - "*"
+      - "*/*"
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  CLICOLOR: 1
+
+jobs:
+  crystal:
+    runs-on: ubuntu-latest
+    container:
+      image: crystallang/crystal:1.18.1
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install shards
+        run: shards install --ignore-crystal-version
+      - name: QA checks
+        run: make qa_crystal
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Check spelling
+      uses: crate-ci/typos@v1.40.0

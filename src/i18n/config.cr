@@ -93,7 +93,7 @@ module I18n
     # I18n.config.fallbacks = ["en-US", "en"]
     # ```
     #
-    # It's also possible to specficy both default fallbacks and a mapping of fallbacks by initializing an
+    # It's also possible to specify both default fallbacks and a mapping of fallbacks by initializing an
     # `I18n::Locale::Fallbacks` object as follows:
     #
     # ```

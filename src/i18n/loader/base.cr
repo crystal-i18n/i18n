@@ -2,7 +2,7 @@ module I18n
   module Loader
     # Translations loader base class.
     abstract class Base
-      # Loads the translations targetted by the current loader.
+      # Loads the translations targeted by the current loader.
       abstract def load : TranslationsHash
 
       # Allows to embed raw translations inside compiled binaries.

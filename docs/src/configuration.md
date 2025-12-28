@@ -25,7 +25,7 @@ built-in support for two loader types:
 * <a href="/ref/I18n/Loader/JSON.html" target="_blank"><code>I18n::Loader::JSON</code></a> - allows to load JSON
   translations files
 
-Each of the above loader implementation supports translations organized accross multiple files (eg. multiple YAML files 
+Each of the above loader implementation supports translations organized across multiple files (eg. multiple YAML files 
 organized in sub-directories for a specific locale). The above loaders are initialized from an absolute or relative 
 directory path (where translations files will be looked up).
 
@@ -46,8 +46,8 @@ I18n.config.loaders = [I18n::Loader::YAML.new("config/locales")] of I18n::Loader
 ```
 
 ::: warning
-The order of `#loaders` is important, especially if the same translations are defined in multiple places accross files
-that are targetted by multiple loaders. For example in a situation where a `simple.translation` translation is defined 
+The order of `#loaders` is important, especially if the same translations are defined in multiple places across files
+that are targeted by multiple loaders. For example in a situation where a `simple.translation` translation is defined 
 by a file that is loaded by a loader **L1** while the same translation is also defined by a file that is loaded by a 
 loader **L2**, the second translation will be used if **L1** comes first in the `#loaders` array.
 :::
@@ -99,7 +99,7 @@ all the available locales when translations are missing:
 I18n.config.fallbacks = ["en-US", "en"]
 ```
 
-It's also possible to specficy both default fallbacks and a mapping of fallbacks by initializing an 
+It's also possible to specify both default fallbacks and a mapping of fallbacks by initializing an 
 `I18n::Locale::Fallbacks` object as follows:
 
 ```crystal

@@ -1,0 +1,5 @@
+[files]
+extend-exclude = [
+  "docs/node_modules",
+  "spec/locales",
+]

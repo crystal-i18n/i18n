@@ -3,13 +3,13 @@ module I18n
     # The JSON translations loader.
     #
     # This loader implementation allows to load translations from JSON files. It must be initialized from a given path
-    # and it will recursively try to load all the JSON files that are available under the targetted directory:
+    # and it will recursively try to load all the JSON files that are available under the targeted directory:
     #
     # ```
     # I18n.config.loaders << I18n::Loader::JSON.new("config/locales")
     # ```
     #
-    # This loader also allows to embed the raw translations that are available under the targetted directory inside the
+    # This loader also allows to embed the raw translations that are available under the targeted directory inside the
     # compiled binary through the use of the `#embed` macro:
     #
     # ```

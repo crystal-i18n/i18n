@@ -4,13 +4,13 @@ module I18n
     #
     # This loader implementation allows to load translations from YAML files (`.yaml` or `.yml` files). It must be
     # initialized from a given path and it will recursively try to load all the YAML files that are available under the
-    # targetted directory:
+    # targeted directory:
     #
     # ```
     # I18n.config.loaders << I18n::Loader::YAML.new("config/locales")
     # ```
     #
-    # This loader also allows to embed the raw translations that are available under the targetted directory inside the
+    # This loader also allows to embed the raw translations that are available under the targeted directory inside the
     # compiled binary through the use of the `#embed` macro:
     #
     # ```

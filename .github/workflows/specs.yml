@@ -2,23 +2,17 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - "*"
+      - "*/*"
   pull_request:
-    branches: "*"
+    branches:
+      - "*"
+      - "*/*"
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
-  qa:
-    runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal:1.18.1
-    steps:
-      - uses: actions/checkout@v1
-      - name: Install shards
-        run: shards install --ignore-crystal-version
-      - name: QA checks
-        run: make qa
   specs:
     strategy:
       fail-fast: false

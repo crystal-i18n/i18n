@@ -67,7 +67,7 @@ module I18n
   # Activates a locale for translations.
   #
   # This method allows to set the locale used to produce translated contents. Note that once activated, the current
-  # locale will remain active until it's explicly changed again. `#with_locale` should be used instead of `#activate`
+  # locale will remain active until it's explicitly changed again. `#with_locale` should be used instead of `#activate`
   # for cases where it is important to ensure that the previous active locale is restored.
   #
   # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in

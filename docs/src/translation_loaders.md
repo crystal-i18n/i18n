@@ -18,7 +18,7 @@ Crystal I18n has built-in support for two loader types:
 * <a href="/ref/I18n/Loader/JSON.html" target="_blank"><code>I18n::Loader::JSON</code></a> - allows to load JSON
   translations files
 
-Each of the above loader implementation supports translations files organized accross multiple files (eg. multiple
+Each of the above loader implementation supports translations files organized across multiple files (eg. multiple
 YAML files organized in sub-directories for a specific locale). The above loaders can be initialized from an absolute or 
 relative directory path (where translations files will be looked up).
 

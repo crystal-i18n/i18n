@@ -74,13 +74,13 @@ fr:
     interpolation: "Bonjour, %{name}!"
     pluralization:
       one: "Un objet"
-      other: "%{count} objets"
+      other: "%{count} articles"
     pluralization_with_zero:
-      zero: "Pas d'objets"
+      zero: "Pas d'articles"
       one: "Un objet"
-      other: "%{count} objets"
+      other: "%{count} articles"
     pluralization_and_interpolation:
       one: "Un objet pour %{name}!"
-      other: "%{count} objets pour %{name}!"
+      other: "%{count} articles pour %{name}!"
     nested:
       translation: "C'est une traduction imbriquée"

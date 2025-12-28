@@ -24,7 +24,7 @@ module I18n
     # Initializes a new catalog from a specific configuration object.
     #
     # This class methods provides the ability to initialize a new catalog of translation from an existing `I18n::Config`
-    # object: all the configuration options set on this object will be used to intialize the new catalog of
+    # object: all the configuration options set on this object will be used to initialize the new catalog of
     # translations.
     def self.from_config(config : Config) : self
       catalog = new(
@@ -52,8 +52,8 @@ module I18n
     # Activates a locale for translations.
     #
     # This method allows to set the locale used to produce translated contents. Note that once activated, the current
-    # locale will remain active until it's explicly changed again. `#with_locale` should be used instead of `#activate`
-    # for cases where it is important to ensure that the previous active locale is restored.
+    # locale will remain active until it's explicitly changed again. `#with_locale` should be used instead of
+    # `#activate` for cases where it is important to ensure that the previous active locale is restored.
     #
     # An `I18n::Errors::InvalidLocale` exception will be raised by this method if the passed locale is not available in
     # the catalog (ie. if no translations was injected into this catalog for the considered locale).

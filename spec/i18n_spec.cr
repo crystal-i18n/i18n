@@ -132,11 +132,11 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.translate("simple.translation").should eq "C'est une traduction simple"
-      I18n.translate("splitted.translation").should eq "Ceci est une traduction définie séparément"
+      I18n.translate("split.translation").should eq "Ceci est une traduction définie séparément"
       I18n.translate("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      I18n.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      I18n.translate("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      I18n.translate("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 articles pour John!"
+      I18n.translate("simple.pluralization", count: 5.5).should eq "5.5 articles"
       I18n.translate(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       I18n.translate("unknown.translation", default: "Hello").should eq "Hello"
       I18n.translate("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
@@ -148,11 +148,11 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.t("simple.translation").should eq "C'est une traduction simple"
-      I18n.t("splitted.translation").should eq "Ceci est une traduction définie séparément"
+      I18n.t("split.translation").should eq "Ceci est une traduction définie séparément"
       I18n.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      I18n.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      I18n.t("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      I18n.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 articles pour John!"
+      I18n.t("simple.pluralization", count: 5.5).should eq "5.5 articles"
       I18n.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       I18n.t("unknown.translation", default: "Hello").should eq "Hello"
       I18n.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
@@ -164,11 +164,13 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.translate!("simple.translation").should eq "C'est une traduction simple"
-      I18n.translate!("splitted.translation").should eq "Ceci est une traduction définie séparément"
+      I18n.translate!("split.translation").should eq "Ceci est une traduction définie séparément"
       I18n.translate!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.translate!("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      I18n.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      I18n.translate!("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      I18n.translate!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq(
+        "6 articles pour John!"
+      )
+      I18n.translate!("simple.pluralization", count: 5.5).should eq "5.5 articles"
       I18n.translate!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       I18n.translate!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
@@ -182,11 +184,11 @@ describe I18n do
       I18n.locale = "fr"
 
       I18n.t!("simple.translation").should eq "C'est une traduction simple"
-      I18n.t!("splitted.translation").should eq "Ceci est une traduction définie séparément"
+      I18n.t!("split.translation").should eq "Ceci est une traduction définie séparément"
       I18n.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       I18n.t!("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      I18n.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      I18n.t!("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      I18n.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 articles pour John!"
+      I18n.t!("simple.pluralization", count: 5.5).should eq "5.5 articles"
       I18n.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       I18n.t!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do

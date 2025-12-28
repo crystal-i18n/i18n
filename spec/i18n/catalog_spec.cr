@@ -56,7 +56,7 @@ describe I18n::Catalog do
       catalog.translate!("custom1.message").should eq "Custom message 1"
       catalog.translate!("custom2.message").should eq "Custom message 2"
 
-      catalog.translate!("overriden.message").should eq "I am overriden"
+      catalog.translate!("overridden.message").should eq "I am overridden"
     end
   end
 
@@ -443,8 +443,8 @@ describe I18n::Catalog do
       catalog.t("simple.translation").should eq "C'est une traduction simple"
       catalog.t("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      catalog.t("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      catalog.t("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 articles pour John!"
+      catalog.t("simple.pluralization", count: 5.5).should eq "5.5 articles"
       catalog.t(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t("unknown.translation", name: "John").should eq "missing translation: fr.unknown.translation"
       catalog.t("unknown.translation", default: "Hello").should eq "Hello"
@@ -461,8 +461,8 @@ describe I18n::Catalog do
       catalog.t!("simple.translation").should eq "C'est une traduction simple"
       catalog.t!("simple.interpolation", name: "John").should eq "Bonjour, John!"
       catalog.t!("simple.interpolation", {name: "John"}).should eq "Bonjour, John!"
-      catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 objets pour John!"
-      catalog.t!("simple.pluralization", count: 5.5).should eq "5.5 objets"
+      catalog.t!("simple.pluralization_and_interpolation", count: 6, name: "John").should eq "6 articles pour John!"
+      catalog.t!("simple.pluralization", count: 5.5).should eq "5.5 articles"
       catalog.t!(:translation, scope: "simple.nested").should eq "C'est une traduction imbriquée"
       catalog.t!("unknown.translation", default: "Hello").should eq "Hello"
       expect_raises(I18n::Errors::MissingTranslation, "missing translation: fr.unknown.translation") do
