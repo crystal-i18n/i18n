@@ -113,5 +113,8 @@ Style/UnlessElse:
 Style/VariableNames:
   Enabled: true
 
+Style/VerboseNilType:
+  Enabled: false
+
 Style/WhileTrue:
   Enabled: true
