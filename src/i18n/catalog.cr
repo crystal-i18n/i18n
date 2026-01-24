@@ -398,7 +398,7 @@ module I18n
 
     private def fetch_translation(locale, key, count = nil, default = nil, ongoing_fallback = false)
       fetch_translation!(locale, key, count, default, ongoing_fallback)
-    rescue ex : Errors::MissingTranslation
+    rescue Errors::MissingTranslation
       nil
     end
 
