@@ -1,7 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700')
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+:root {
+  --vp-c-accent: #f93943;
+  --vp-c-accent-bg: #f93943;
+  --vp-c-accent-hover: #ff5a63;
+  --vp-c-accent-text: #fff;
+  --vp-c-text: #2c3e50;
+  --vp-c-border: #eaecef;
+  --vp-c-divider: #eaecef;
+  --font-family: 'Lato', sans-serif;
+}
 
 body {
-  font-family 'Lato', sans-serif !important
+  font-family: 'Lato', sans-serif !important;
 }
 
 .features-wrapper {
@@ -34,6 +45,7 @@ a.getting-started-button {
   text-decoration: none !important;
   font-weight: bold;
 }
+
 a.getting-started-button:hover {
   background-color: #414959;
 }

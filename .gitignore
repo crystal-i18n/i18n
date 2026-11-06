@@ -15,5 +15,7 @@
 .icr_*
 *.db
 /shard.lock
+/docs/src/.vuepress/.cache
+/docs/src/.vuepress/.temp
 /docs/src/.vuepress/dist
 /docs/src/.vuepress/public/ref

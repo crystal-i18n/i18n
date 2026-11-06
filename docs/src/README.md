@@ -1,4 +1,4 @@
-<p style="text-align:center;"><img src="assets/img/logo.svg" width="150px;"></p>
+<p style="text-align:center;"><img src="/assets/img/logo.svg" width="150px;"></p>
 <h1 style="padding-top: 40px;text-align:center;">Crystal I18n</h1>
 <hr />
 <p style="text-align:center;">An internationalization library for Crystal. </p>
